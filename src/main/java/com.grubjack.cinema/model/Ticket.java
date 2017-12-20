@@ -4,33 +4,34 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Ticket implements Serializable {
-    private Seat seat;
-    private boolean sold;
+    private int row;
+    private int seat;
     private int price;
+    private boolean sold;
 
     public Ticket() {
     }
 
-    public Ticket(Seat seat, boolean sold, int price) {
+    public Ticket(int row, int seat, int price) {
+        this.row = row;
         this.seat = seat;
-        this.sold = sold;
         this.price = price;
     }
 
-    public Seat getSeat() {
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getSeat() {
         return seat;
     }
 
-    public void setSeat(Seat seat) {
+    public void setSeat(int seat) {
         this.seat = seat;
-    }
-
-    public boolean isSold() {
-        return sold;
-    }
-
-    public void setSold(boolean sold) {
-        this.sold = sold;
     }
 
     public int getPrice() {
@@ -41,27 +42,38 @@ public class Ticket implements Serializable {
         this.price = price;
     }
 
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return sold == ticket.sold &&
+        return row == ticket.row &&
+                seat == ticket.seat &&
                 price == ticket.price &&
-                Objects.equals(seat, ticket.seat);
+                sold == ticket.sold;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(seat, sold, price);
+
+        return Objects.hash(row, seat, price, sold);
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
-                "seat=" + seat +
-                ", sold=" + sold +
+                "row=" + row +
+                ", seat=" + seat +
                 ", price=" + price +
+                ", sold=" + sold +
                 '}';
     }
 }

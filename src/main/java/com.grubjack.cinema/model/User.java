@@ -8,8 +8,8 @@ import java.util.Set;
 public class User implements Serializable {
     private String firstName;
     private String lastName;
-    private boolean admin;
-    private boolean registered;
+    private String email;
+    private String password;
     private Set<Role> roles;
     private Set<Ticket> tickets;
 
@@ -17,11 +17,61 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String firstName, String lastName) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.password = password;
         this.roles = new HashSet<>();
         this.tickets = new HashSet<>();
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     @Override
@@ -29,17 +79,17 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return admin == user.admin &&
-                registered == user.registered &&
-                Objects.equals(firstName, user.firstName) &&
+        return Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
                 Objects.equals(roles, user.roles) &&
                 Objects.equals(tickets, user.tickets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, admin, registered, roles, tickets);
+        return Objects.hash(firstName, lastName, email, password, roles, tickets);
     }
 
     @Override
@@ -47,8 +97,8 @@ public class User implements Serializable {
         return "User{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", admin=" + admin +
-                ", registered=" + registered +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", roles=" + roles +
                 ", tickets=" + tickets +
                 '}';

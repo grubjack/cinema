@@ -1,7 +1,6 @@
 package com.grubjack.cinema.model;
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -9,16 +8,16 @@ import java.util.Set;
 public class Session implements Serializable {
     private DayOfWeek dayOfWeek;
     private TimeOfDay timeOfDay;
-    private Hall hall;
+    private String movie;
     private Set<Ticket> tickets;
 
     public Session() {
     }
 
-    public Session(DayOfWeek dayOfWeek, TimeOfDay timeOfDay, Hall hall) {
+    public Session(DayOfWeek dayOfWeek, TimeOfDay timeOfDay, String movie) {
         this.dayOfWeek = dayOfWeek;
         this.timeOfDay = timeOfDay;
-        this.hall = hall;
+        this.movie = movie;
         this.tickets = new HashSet<>();
     }
 
@@ -38,12 +37,12 @@ public class Session implements Serializable {
         this.timeOfDay = timeOfDay;
     }
 
-    public Hall getHall() {
-        return hall;
+    public String getMovie() {
+        return movie;
     }
 
-    public void setHall(Hall hall) {
-        this.hall = hall;
+    public void setMovie(String movie) {
+        this.movie = movie;
     }
 
     public Set<Ticket> getTickets() {
@@ -61,13 +60,13 @@ public class Session implements Serializable {
         Session session = (Session) o;
         return dayOfWeek == session.dayOfWeek &&
                 timeOfDay == session.timeOfDay &&
-                Objects.equals(hall, session.hall) &&
+                Objects.equals(movie, session.movie) &&
                 Objects.equals(tickets, session.tickets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dayOfWeek, timeOfDay, hall, tickets);
+        return Objects.hash(dayOfWeek, timeOfDay, movie, tickets);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class Session implements Serializable {
         return "Session{" +
                 "dayOfWeek=" + dayOfWeek +
                 ", timeOfDay=" + timeOfDay +
-                ", hall=" + hall +
+                ", movie='" + movie + '\'' +
                 ", tickets=" + tickets +
                 '}';
     }

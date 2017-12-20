@@ -1,7 +1,7 @@
 package com.grubjack.cinema.model;
 
 public enum Role {
-    ADMIN,
-    REGISTERED_USER,
-    UNREGISTERED_USER
+    ROLE_ADMIN,
+    ROLE_UNREGISTERED_USER,
+    ROLE_REGISTERED_USER;
 }
