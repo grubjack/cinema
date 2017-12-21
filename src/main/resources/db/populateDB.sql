@@ -1,6 +1,7 @@
-DELETE FROM `session_tickets`;
+DELETE FROM tickets;
 DELETE FROM `sessions`;
 DELETE FROM `user_roles`;
+DELETE FROM `roles`;
 DELETE FROM `users`;
 
 INSERT INTO `users` (firstname, lastname, email, password) VALUES
@@ -15,16 +16,26 @@ INSERT INTO `users` (firstname, lastname, email, password) VALUES
   ('Karla', 'Bowman', 'jginspace@gmail.com', md5('Bb12345')),
   ('Tommy', 'Owen', 'janneh@gmail.com', md5('Oo12345'));
 
+INSERT INTO `roles` (title, description) VALUES
+  ('ADMIN', 'You can change scheduler, add or cancel movies'),
+  ('REGISTERED', 'You can book a ticket'),
+  ('UNREGISTERED', 'You can only see scheduler,in order to buy a ticket you need to register');
 
-INSERT INTO `user_roles` (`role`, `user_id`) VALUES
-  ('ROLE_ADMIN', 1),
-  ('ROLE_REGISTERED_USER', 1),
-  ('ROLE_ADMIN', 2),
-  ('ROLE_REGISTERED_USER', 2),
-  ('ROLE_ADMIN', 3),
-  ('ROLE_REGISTERED_USER', 3),
-  ('ROLE_REGISTERED_USER', 7),
-  ('ROLE_REGISTERED_USER', 9);
+
+INSERT INTO `user_roles` (role_id, user_id) VALUES
+  (1, 1),
+  (2, 1),
+  (1, 2),
+  (2, 2),
+  (1, 3),
+  (2, 3),
+  (3, 4),
+  (3, 5),
+  (3, 6),
+  (2, 7),
+  (3, 8),
+  (2, 9),
+  (3, 10);
 
 INSERT INTO `sessions` (day, time, movie) VALUES
   ('MONDAY', '09:00', 'Her'),
@@ -70,7 +81,7 @@ INSERT INTO `sessions` (day, time, movie) VALUES
   ('SUNDAY', '20:00', 'Get Out'),
   ('SUNDAY', '22:00', 'Get Out');
 
-INSERT INTO `session_tickets` (row, seat, price, session_id) VALUES
+INSERT INTO `tickets` (row, seat, price, session_id) VALUES
   (1, 1, 15, 1),
   (1, 2, 15, 1),
   (1, 3, 15, 1),

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Ticket implements Serializable {
+    private int id;
     private int row;
     private int seat;
     private int price;
@@ -16,6 +17,14 @@ public class Ticket implements Serializable {
         this.row = row;
         this.seat = seat;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getRow() {
@@ -65,15 +74,5 @@ public class Ticket implements Serializable {
     public int hashCode() {
 
         return Objects.hash(row, seat, price, sold);
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "row=" + row +
-                ", seat=" + seat +
-                ", price=" + price +
-                ", sold=" + sold +
-                '}';
     }
 }

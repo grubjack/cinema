@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Session implements Serializable {
+    private int id;
     private DayOfWeek dayOfWeek;
     private TimeOfDay timeOfDay;
     private String movie;
@@ -19,6 +20,14 @@ public class Session implements Serializable {
         this.timeOfDay = timeOfDay;
         this.movie = movie;
         this.tickets = new HashSet<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public DayOfWeek getDayOfWeek() {
@@ -67,15 +76,5 @@ public class Session implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(dayOfWeek, timeOfDay, movie, tickets);
-    }
-
-    @Override
-    public String toString() {
-        return "Session{" +
-                "dayOfWeek=" + dayOfWeek +
-                ", timeOfDay=" + timeOfDay +
-                ", movie='" + movie + '\'' +
-                ", tickets=" + tickets +
-                '}';
     }
 }

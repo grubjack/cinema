@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class User implements Serializable {
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -24,6 +25,14 @@ public class User implements Serializable {
         this.password = password;
         this.roles = new HashSet<>();
         this.tickets = new HashSet<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -90,17 +99,5 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, email, password, roles, tickets);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                ", tickets=" + tickets +
-                '}';
     }
 }
