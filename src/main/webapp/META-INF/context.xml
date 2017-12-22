@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/">
-    <Resource
-            name="jdbc/CinemaDB"
-            auth="Container"
-            type="javax.sql.DataSource"
-            maxActive="100"
-            maxIdle="30"
-            maxWait="10000"
-            driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/cinema"
-            username="cinema_user"
-            password="ahnei0Ai"
-    />
+<Context>
+    <Resource name="jdbc/CinemaDB"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxActive="100"
+              maxIdle="10"
+              maxWait="10000"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/cinema?serverTimezone=UTC"
+              username="cinema_user"
+              password="ahnei0Ai"/>
 </Context>

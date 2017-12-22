@@ -29,7 +29,7 @@ public final class DaoFactory {
         Connection connection = null;
         try {
             Context context = new InitialContext();
-            DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/CinemaDB");
+            DataSource dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/CinemaDB");
             connection = dataSource.getConnection();
         } catch (NamingException | SQLException e) {
             log.error("Can't find datasource in jndi context", e);
