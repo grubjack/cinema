@@ -10,9 +10,11 @@ import java.util.List;
  */
 public interface TicketDao {
 
-    void create(Ticket ticket, int sessionId) throws DaoException;
+    void create(Ticket ticket, int showId) throws DaoException;
 
-    void update(Ticket ticket, int sessionId) throws DaoException;
+    void generate(int showId) throws DaoException;
+
+    void update(Ticket ticket, int showId) throws DaoException;
 
     void delete(int id) throws DaoException;
 
@@ -22,8 +24,11 @@ public interface TicketDao {
 
     List<Ticket> findByUser(int userId) throws DaoException;
 
-    List<Ticket> findBySession(int sessionId) throws DaoException;
+    List<Ticket> findByShow(int showId) throws DaoException;
 
     List<Ticket> findByState(boolean sold) throws DaoException;
+
+    void buyTicket(int id, int userId) throws DaoException;
+
 
 }
