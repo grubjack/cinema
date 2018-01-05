@@ -1,43 +1,38 @@
-DELETE FROM tickets;
-DELETE FROM `sessions`;
+DELETE FROM `tickets`;
+DELETE FROM `shows`;
 DELETE FROM `user_roles`;
-DELETE FROM `roles`;
 DELETE FROM `users`;
 
 INSERT INTO `users` (firstname, lastname, email, password) VALUES
   ('Corey', 'Dunn', 'matloff@optonline.net', md5('Dd1234')),
   ('Ted', 'Cobb', 'smcnabb@yahoo.com', md5('Tt12345')),
   ('Kerry', 'Gross', 'webinc@aol.com', md5('Gg12345')),
-  ('Di14ie', 'Vasquez', 'mwilson@optonline.net', md5('Vv12345')),
+  ('Dixie', 'Vasquez', 'mwilson@optonline.net', md5('Vv12345')),
   ('Verna', 'Lawrence', 'jbuchana@gmail.com', md5('Ll12345')),
   ('Joel', 'Chavez', 'techie@gmail.com', md5('Cc12345')),
   ('Zachary', 'Vaughn', 'lridener@gmail.com', md5('Vv12345')),
   ('Christy ', 'Gomez', 'philen@optonline.net', md5('Gg12345')),
   ('Karla', 'Bowman', 'jginspace@gmail.com', md5('Bb12345')),
-  ('Tommy', 'Owen', 'janneh@gmail.com', md5('Oo12345'));
+  ('Tommy', 'Owen', 'janneh@gmail.com', md5('Oo12345')),
+  ('Alex', 'Urban', 'urban@gmail.com', md5('rootINA')),
+  ('Test', 'Testovich', 'test@gmail.com', md5('test123'));
 
-INSERT INTO `roles` (title, description) VALUES
-  ('ADMIN', 'You can change scheduler, add or cancel movies'),
-  ('REGISTERED', 'You can book a ticket'),
-  ('UNREGISTERED', 'You can only see scheduler,in order to buy a ticket you need to register');
+INSERT INTO `user_roles` (role, user_id) VALUES
+  ('ROLE_USER', 1),
+  ('ROLE_ADMIN', 2),
+  ('ROLE_USER', 3),
+  ('ROLE_USER', 4),
+  ('ROLE_USER', 5),
+  ('ROLE_USER', 6),
+  ('ROLE_USER', 7),
+  ('ROLE_USER', 8),
+  ('ROLE_USER', 9),
+  ('ROLE_USER', 10),
+  ('ROLE_ADMIN', 11),
+  ('ROLE_USER', 11);
 
 
-INSERT INTO `user_roles` (role_id, user_id) VALUES
-  (1, 1),
-  (2, 1),
-  (1, 2),
-  (2, 2),
-  (1, 3),
-  (2, 3),
-  (3, 4),
-  (3, 5),
-  (3, 6),
-  (2, 7),
-  (3, 8),
-  (2, 9),
-  (3, 10);
-
-INSERT INTO `sessions` (day, time, movie) VALUES
+INSERT INTO `shows` (day, time, movie) VALUES
   ('MONDAY', '09:00', 'Her'),
   ('MONDAY', '11:30', 'Birdman'),
   ('MONDAY', '14:00', 'Birdman'),
@@ -77,11 +72,12 @@ INSERT INTO `sessions` (day, time, movie) VALUES
   ('SUNDAY', '09:00', 'Under the Skin'),
   ('SUNDAY', '11:30', 'Inside Out'),
   ('SUNDAY', '14:00', 'Inside Out'),
-  ('SUNDAY', '17:30', 'Under the Skin'),
-  ('SUNDAY', '20:00', 'Get Out'),
-  ('SUNDAY', '22:00', 'Get Out');
+  ('SUNDAY', '17:30', 'Under the Skin');
+#   ('SUNDAY', '20:00', 'Get Out'),
+#   ('SUNDAY', '22:00', 'Get Out');
 
-INSERT INTO `tickets` (row, seat, price, session_id) VALUES
+
+INSERT INTO `tickets` (row, seat, price, show_id) VALUES
   (1, 1, 15, 1),
   (1, 2, 15, 1),
   (1, 3, 15, 1),
@@ -401,21 +397,20 @@ INSERT INTO `tickets` (row, seat, price, session_id) VALUES
   (2, 1, 20, 40),
   (2, 2, 20, 40),
   (2, 3, 20, 40),
-  (2, 4, 20, 40),
-  (1, 1, 30, 41),
-  (1, 2, 30, 41),
-  (1, 3, 30, 41),
-  (1, 4, 30, 41),
-  (2, 1, 30, 41),
-  (2, 2, 30, 41),
-  (2, 3, 30, 41),
-  (2, 4, 30, 41),
-  (1, 1, 30, 42),
-  (1, 2, 30, 42),
-  (1, 3, 30, 42),
-  (1, 4, 30, 42),
-  (2, 1, 30, 42),
-  (2, 2, 30, 42),
-  (2, 3, 30, 42),
-  (2, 4, 30, 42);
-  
+  (2, 4, 20, 40);
+#   (1, 1, 30, 41),
+#   (1, 2, 30, 41),
+#   (1, 3, 30, 41),
+#   (1, 4, 30, 41),
+#   (2, 1, 30, 41),
+#   (2, 2, 30, 41),
+#   (2, 3, 30, 41),
+#   (2, 4, 30, 41);
+#   (1, 1, 30, 42),
+#   (1, 2, 30, 42),
+#   (1, 3, 30, 42),
+#   (1, 4, 30, 42),
+#   (2, 1, 30, 42),
+#   (2, 2, 30, 42),
+#   (2, 3, 30, 42),
+#   (2, 4, 30, 42);
