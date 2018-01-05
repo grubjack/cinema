@@ -11,8 +11,8 @@ public class User implements Serializable {
     private String lastName;
     private String email;
     private String password;
-    private Set<Role> roles;
-    private Set<Ticket> tickets;
+    private Set<Role> roles = new HashSet<>();
+    private Set<Ticket> tickets = new HashSet<>();
 
 
     public User() {
@@ -23,8 +23,10 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.roles = new HashSet<>();
-        this.tickets = new HashSet<>();
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public int getId() {
@@ -71,10 +73,6 @@ public class User implements Serializable {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public Set<Ticket> getTickets() {
         return tickets;
     }
@@ -100,4 +98,13 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(firstName, lastName, email, password, roles, tickets);
     }
+
+    public boolean hasRole(String role) {
+        return roles.contains(Role.valueOf(role));
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
 }

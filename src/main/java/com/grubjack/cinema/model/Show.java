@@ -5,21 +5,20 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Session implements Serializable {
+public class Show implements Serializable {
     private int id;
     private DayOfWeek dayOfWeek;
     private TimeOfDay timeOfDay;
     private String movie;
-    private Set<Ticket> tickets;
+    private Set<Ticket> tickets = new HashSet<>();
 
-    public Session() {
+    public Show() {
     }
 
-    public Session(DayOfWeek dayOfWeek, TimeOfDay timeOfDay, String movie) {
+    public Show(DayOfWeek dayOfWeek, TimeOfDay timeOfDay, String movie) {
         this.dayOfWeek = dayOfWeek;
         this.timeOfDay = timeOfDay;
         this.movie = movie;
-        this.tickets = new HashSet<>();
     }
 
     public int getId() {
@@ -66,11 +65,11 @@ public class Session implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Session session = (Session) o;
-        return dayOfWeek == session.dayOfWeek &&
-                timeOfDay == session.timeOfDay &&
-                Objects.equals(movie, session.movie) &&
-                Objects.equals(tickets, session.tickets);
+        Show show = (Show) o;
+        return dayOfWeek == show.dayOfWeek &&
+                timeOfDay == show.timeOfDay &&
+                Objects.equals(movie, show.movie) &&
+                Objects.equals(tickets, show.tickets);
     }
 
     @Override

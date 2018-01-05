@@ -13,6 +13,10 @@ public class Ticket implements Serializable {
     public Ticket() {
     }
 
+    public Ticket(boolean sold) {
+        this.sold = sold;
+    }
+
     public Ticket(int row, int seat, int price) {
         this.row = row;
         this.seat = seat;

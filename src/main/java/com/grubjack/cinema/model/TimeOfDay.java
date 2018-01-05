@@ -1,8 +1,7 @@
 package com.grubjack.cinema.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public enum TimeOfDay {
     FIRST("09:00"),
@@ -19,11 +18,19 @@ public enum TimeOfDay {
     }
 
     public static TimeOfDay convert(String string) {
-        return Stream.of(TimeOfDay.values()).filter(t -> t.equals(string)).findFirst().get();
+        for (TimeOfDay time : TimeOfDay.values()) {
+            if (time.toString().equals(string))
+                return time;
+        }
+        return null;
     }
 
     public static List<String> names() {
-        return Stream.of(TimeOfDay.values()).map(Enum::name).collect(Collectors.toList());
+        List<String> names = new ArrayList();
+        for (TimeOfDay time : TimeOfDay.values()) {
+            names.add(time.toString());
+        }
+        return names;
     }
 
     @Override
