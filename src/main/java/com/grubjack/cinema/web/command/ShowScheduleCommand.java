@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.grubjack.cinema.util.ConfigManager.*;
+
 /**
  * Created by Urban Aleksandr
  */
@@ -17,11 +19,11 @@ public class ShowScheduleCommand implements Command {
     private static Logger log = LoggerFactory.getLogger(ShowScheduleCommand.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        log.info("Executing with session id {}", req.getSession().getId());
-        req.getSession().setAttribute("days", DayOfWeek.names());
-        req.getSession().setAttribute("times", TimeOfDay.names());
-        req.getSession().setAttribute("showService", ServiceFactory.getInstance().getShowService());
-        return ConfigManager.getInstance().getProperty(ConfigManager.MAIN_PAGE_PATH);
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        log.info("Executing with session id {}", request.getSession().getId());
+        request.getSession().setAttribute(DAYS_ATTR, DayOfWeek.names());
+        request.getSession().setAttribute(TIMES_ATTR, TimeOfDay.names());
+        request.getSession().setAttribute(SHOW_SERVICE_ATTR, ServiceFactory.getInstance().getShowService());
+        return ConfigManager.getInstance().getProperty(MAIN_PAGE_PATH);
     }
 }

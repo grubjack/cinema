@@ -14,10 +14,10 @@ public class LogoutCommand implements Command {
     private static Logger log = LoggerFactory.getLogger(LogoutCommand.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        log.info("Executing with session id {}", req.getSession().getId());
-        req.getSession().invalidate();
-        LocaleResourceBundle.setFor(req);
-        return new ShowScheduleCommand().execute(req, resp);
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        log.info("Executing with session id {}", request.getSession().getId());
+        request.getSession().invalidate();
+        LocaleResourceBundle.setFor(request);
+        return new ShowScheduleCommand().execute(request, response);
     }
 }

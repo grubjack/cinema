@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSessionListener;
  * Created by Urban Aleksandr
  */
 public class SessionListener implements HttpSessionListener {
-
     private static Logger log = LoggerFactory.getLogger(SessionListener.class);
     private int sessionCount = 0;
 

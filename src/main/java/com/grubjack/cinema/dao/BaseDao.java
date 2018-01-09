@@ -8,7 +8,6 @@ import java.util.List;
  * Created by Urban Aleksandr
  */
 public interface BaseDao<T> {
-
     void create(T t) throws DaoException;
 
     void update(T t) throws DaoException;

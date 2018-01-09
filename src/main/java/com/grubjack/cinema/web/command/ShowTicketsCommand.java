@@ -10,21 +10,22 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.grubjack.cinema.util.ConfigManager.*;
+
 /**
  * Created by Urban Aleksandr
  */
 public class ShowTicketsCommand implements Command {
-
     private static Logger log = LoggerFactory.getLogger(ShowTicketsCommand.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws DaoException {
-        log.info("Executing with session id {}", req.getSession().getId());
-        User user = (User) req.getSession().getAttribute("loggedUser");
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
+        log.info("Executing with session id {}", request.getSession().getId());
+        User user = (User) request.getSession().getAttribute(LOGGED_USER_ATTR);
         if (user != null) {
             log.info("Show tickets for user with id " + user.getId());
-            req.getSession().setAttribute("tickets", ServiceFactory.getInstance().getTicketService().findByUser(user.getId()));
+            request.getSession().setAttribute(TICKETS_ATTR, ServiceFactory.getInstance().getTicketService().findByUser(user.getId()));
         }
-        return ConfigManager.getInstance().getProperty(ConfigManager.TICKETS_PAGE_PATH);
+        return ConfigManager.getInstance().getProperty(TICKETS_PAGE_PATH);
     }
 }

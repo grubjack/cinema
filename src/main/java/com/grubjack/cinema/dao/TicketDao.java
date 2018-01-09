@@ -9,7 +9,6 @@ import java.util.List;
  * Created by Urban Aleksandr
  */
 public interface TicketDao {
-
     void create(Ticket ticket, int showId) throws DaoException;
 
     void update(Ticket ticket, int showId) throws DaoException;
@@ -27,6 +26,4 @@ public interface TicketDao {
     List<Ticket> findByState(boolean sold) throws DaoException;
 
     void buyTicket(int id, int userId) throws DaoException;
-
-
 }

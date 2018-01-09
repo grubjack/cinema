@@ -20,5 +20,4 @@ public interface ShowDao extends BaseDao<Show> {
     List<Show> findByMovie(String movie) throws DaoException;
 
     Show findByTicket(int ticketId) throws DaoException;
-
 }

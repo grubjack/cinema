@@ -9,31 +9,28 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.grubjack.cinema.util.ConfigManager.*;
+
 /**
  * Created by Urban Aleksandr
  */
 public class ShowHallCommand implements Command {
-
     private static Logger log = LoggerFactory.getLogger(ShowHallCommand.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws DaoException {
-        log.info("Executing with session id {}", req.getSession().getId());
-        String page = ConfigManager.getInstance().getProperty(ConfigManager.HALL_PAGE_PATH);
-        String showIdParameter = req.getParameter("showId");
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
+        log.info("Executing with session id {}", request.getSession().getId());
+        String showIdParameter = request.getParameter(SHOW_ID_PARAM);
         if (showIdParameter != null && !showIdParameter.isEmpty()) {
-            req.getSession().setAttribute("showId", Integer.parseInt(showIdParameter));
-        } else {
+            request.getSession().setAttribute(SHOW_ID_PARAM, Integer.parseInt(showIdParameter));
         }
-        int showId = (int) req.getSession().getAttribute("showId");
-
+        int showId = (int) request.getSession().getAttribute(SHOW_ID_PARAM);
         log.info("Show tickets for session with id " + showId);
-        req.getSession().setAttribute("tickets", ServiceFactory.getInstance().getTicketService().findByShow(showId));
-        req.getSession().setAttribute("rows", ConfigManager.getInstance().getProperty(ConfigManager.HALL_ROW_VALUE));
-        req.getSession().setAttribute("seats", ConfigManager.getInstance().getProperty(ConfigManager.HALL_SEAT_VALUE));
-        req.getSession().setAttribute("ticketService", ServiceFactory.getInstance().getTicketService());
-        req.getSession().setAttribute("attendance", ServiceFactory.getInstance().getShowService().getAttendance(showId));
-        req.getSession().setAttribute("sourceCommand", this);
-        return page;
+        request.getSession().setAttribute(TICKETS_ATTR, ServiceFactory.getInstance().getTicketService().findByShow(showId));
+        request.getSession().setAttribute(ROWS_ATTR, ConfigManager.getInstance().getProperty(ConfigManager.HALL_ROW_VALUE));
+        request.getSession().setAttribute(SEATS_ATTR, ConfigManager.getInstance().getProperty(ConfigManager.HALL_SEAT_VALUE));
+        request.getSession().setAttribute(TICKET_SERVICE_ATTR, ServiceFactory.getInstance().getTicketService());
+        request.getSession().setAttribute(ATTENDANCE_ATTR, ServiceFactory.getInstance().getShowService().getAttendance(showId));
+        return ConfigManager.getInstance().getProperty(HALL_PAGE_PATH);
     }
 }

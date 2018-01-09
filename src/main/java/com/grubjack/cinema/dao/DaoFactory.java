@@ -22,6 +22,11 @@ import java.util.Properties;
  */
 public final class DaoFactory {
     private static final String PROPERTIES_FILE = "db/mysql.properties";
+    private static final String DATASOURCE_CONTEXT_PATH = "java:/comp/env/jdbc/CinemaDB";
+    private static final String DATABASE_DRIVER = "database.driver";
+    private static final String DATABASE_URL = "database.url";
+    private static final String DATABASE_USERNAME = "database.username";
+    private static final String DATABASE_PASSWORD = "database.password";
     private static final Properties PROPERTIES = new Properties();
     private static DaoFactory instance;
 
@@ -34,7 +39,7 @@ public final class DaoFactory {
         Connection connection = null;
         try {
             Context context = new InitialContext();
-            DataSource dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/CinemaDB");
+            DataSource dataSource = (DataSource) context.lookup(DATASOURCE_CONTEXT_PATH);
             connection = dataSource.getConnection();
         } catch (NamingException | SQLException e) {
             log.error("Can't find datasource in jndi context", e);
@@ -61,15 +66,15 @@ public final class DaoFactory {
                 log.error("Can't load property file", e);
             }
             try {
-                Class.forName(PROPERTIES.getProperty("database.driver"));
+                Class.forName(PROPERTIES.getProperty(DATABASE_DRIVER));
             } catch (ClassNotFoundException e) {
                 log.error("Can't load class for name", e);
             }
 
             try {
-                String url = PROPERTIES.getProperty("database.url");
-                String username = PROPERTIES.getProperty("database.username");
-                String password = PROPERTIES.getProperty("database.password");
+                String url = PROPERTIES.getProperty(DATABASE_URL);
+                String username = PROPERTIES.getProperty(DATABASE_USERNAME);
+                String password = PROPERTIES.getProperty(DATABASE_PASSWORD);
                 connection = DriverManager.getConnection(url, username, password);
             } catch (SQLException e) {
                 log.error("Can't get connection", e);

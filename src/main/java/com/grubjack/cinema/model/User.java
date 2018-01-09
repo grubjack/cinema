@@ -14,7 +14,6 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
     private Set<Ticket> tickets = new HashSet<>();
 
-
     public User() {
     }
 

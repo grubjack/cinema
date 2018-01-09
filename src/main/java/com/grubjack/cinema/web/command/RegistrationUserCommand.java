@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.grubjack.cinema.util.ConfigManager.*;
+
 /**
  * Created by Urban Aleksandr
  */
@@ -19,27 +21,25 @@ public class RegistrationUserCommand implements Command {
     private static Logger log = LoggerFactory.getLogger(RegistrationUserCommand.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws DaoException {
-        log.info("Executing with session id {}", req.getSession().getId());
-        String firstname = req.getParameter("firstname");
-        String lastname = req.getParameter("lastname");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        req.getSession().setAttribute("firstname", firstname);
-        req.getSession().setAttribute("lastname", lastname);
-        req.getSession().setAttribute("email", email);
-        req.getSession().setAttribute("password", password);
-        String[] roles = req.getParameterValues("selectedRoles");
-        if (ServiceFactory.getInstance().getUserService().getByEmail(email) != null) {
-            log.info("Register user with firstname {}, lastname {},email {},roles {}", firstname, lastname, email, roles);
-            User user = new User(firstname, lastname, email, DigestMD5Helper.computeHash(password));
-            if (roles != null) {
-                for (String role : roles) {
-                    user.addRole(Role.valueOf(role));
-                }
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
+        log.info("Executing with session id {}", request.getSession().getId());
+        String firstname = request.getParameter(FIRSTNAME_PARAM);
+        String lastname = request.getParameter(LASTNAME_PARAM);
+        String email = request.getParameter(EMAIL_PARAM);
+        String password = request.getParameter(PASSWORD_PARAM);
+        request.getSession().setAttribute(FIRSTNAME_PARAM, firstname);
+        request.getSession().setAttribute(LASTNAME_PARAM, lastname);
+        request.getSession().setAttribute(EMAIL_PARAM, email);
+        request.getSession().setAttribute(PASSWORD_PARAM, password);
+        String[] roles = request.getParameterValues(SELECTED_ROLES_PARAM);
+        log.info("Register user with firstname {}, lastname {},email {},roles {}", firstname, lastname, email, roles);
+        User user = new User(firstname, lastname, email, DigestMD5Helper.computeHash(password));
+        if (roles != null) {
+            for (String role : roles) {
+                user.addRole(Role.valueOf(role));
             }
-            ServiceFactory.getInstance().getUserService().create(user);
         }
-        return req.getParameter("from") == null ? ConfigManager.getInstance().getProperty(ConfigManager.LOGIN_PAGE_PATH) : req.getParameter("from").substring(req.getContextPath().length());
+        ServiceFactory.getInstance().getUserService().create(user);
+        return (request.getParameter(FROM_PARAM) == null) ? ConfigManager.getInstance().getProperty(LOGIN_PAGE_PATH) : request.getParameter(FROM_PARAM).substring(request.getContextPath().length());
     }
 }

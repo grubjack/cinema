@@ -13,10 +13,8 @@ import java.util.Map;
  */
 public class RequestHelper {
     private static Logger log = LoggerFactory.getLogger(RequestHelper.class);
-
     private static RequestHelper instance = null;
     private Map<String, Command> commands = new HashMap<>();
-
 
     private RequestHelper() {
         commands.put("login", new LoginCommand());

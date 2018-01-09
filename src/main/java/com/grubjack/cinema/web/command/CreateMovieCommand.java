@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.grubjack.cinema.util.ConfigManager.*;
+
 /**
  * Created by Urban Aleksandr
  */
@@ -18,18 +20,18 @@ public class CreateMovieCommand implements Command {
     private static Logger log = LoggerFactory.getLogger(CreateMovieCommand.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws DaoException {
-        String day = (String) req.getSession().getAttribute("day");
-        String time = (String) req.getSession().getAttribute("time");
-        String movie = req.getParameter("movie");
-        req.getSession().setAttribute("movie", movie);
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
+        String day = (String) request.getSession().getAttribute(DAY_PARAM);
+        String time = (String) request.getSession().getAttribute(TIME_PARAM);
+        String movie = request.getParameter(MOVIE_PARAM);
+        request.getSession().setAttribute(MOVIE_PARAM, movie);
         if (day != null && !day.isEmpty() && time != null && !time.isEmpty()) {
             DayOfWeek dayOfWeek = DayOfWeek.valueOf(day);
             TimeOfDay timeOfDay = TimeOfDay.convert(time);
             log.info("Create movie \"{}\" day {}, time {} ", movie, day, time);
             ServiceFactory.getInstance().getShowService().create(new Show(dayOfWeek, timeOfDay, movie));
         }
-        return new ShowScheduleCommand().execute(req, resp);
+        return new ShowScheduleCommand().execute(request, response);
     }
 
 }
