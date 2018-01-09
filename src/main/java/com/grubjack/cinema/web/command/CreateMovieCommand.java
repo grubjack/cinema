@@ -22,6 +22,7 @@ public class CreateMovieCommand implements Command {
         String day = (String) req.getSession().getAttribute("day");
         String time = (String) req.getSession().getAttribute("time");
         String movie = req.getParameter("movie");
+        req.getSession().setAttribute("movie", movie);
         if (day != null && !day.isEmpty() && time != null && !time.isEmpty()) {
             DayOfWeek dayOfWeek = DayOfWeek.valueOf(day);
             TimeOfDay timeOfDay = TimeOfDay.convert(time);

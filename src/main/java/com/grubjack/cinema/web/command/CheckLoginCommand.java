@@ -23,8 +23,10 @@ public class CheckLoginCommand implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DaoException, ServletException, IOException {
         log.info("Executing with session id {}", req.getSession().getId());
         String login = req.getParameter("login");
-        String pass = req.getParameter("password");
-        if (getInstance().getUserService().checkLogin(login, pass)) {
+        String password = req.getParameter("password");
+        req.getSession().setAttribute("login", login);
+        req.getSession().setAttribute("password", password);
+        if (getInstance().getUserService().checkLogin(login, password)) {
             User user = getInstance().getUserService().getByEmail(login);
             if (user != null) {
                 req.getSession().setAttribute("loggedUser", user);

@@ -13,19 +13,19 @@
         </li>
         <li>
             <label>${lang['user.firstname']}</label>
-            <input type="text" name="firstname" required/>
+            <input type="text" name="firstname" value="${sessionScope.firstname}" required/>
         </li>
         <li>
             <label>${lang['user.lastname']}</label>
-            <input type="text" name="lastname" required/>
+            <input type="text" name="lastname" value="${sessionScope.lastname}" required/>
         </li>
         <li>
             <label>Email:</label>
-            <input type="email" name="email" required/>
+            <input type="email" name="email" value="${sessionScope.email}" required/>
         </li>
         <li>
             <label>${lang['user.password']}</label>
-            <input type="password" name="password" required/>
+            <input type="password" name="password" value="${sessionScope.password}" required/>
         </li>
         <li>
             <label>${lang['user.role']}</label>

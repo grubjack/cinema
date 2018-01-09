@@ -25,19 +25,21 @@ public class RegistrationUserCommand implements Command {
         String lastname = req.getParameter("lastname");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        req.getSession().setAttribute("firstname", firstname);
+        req.getSession().setAttribute("lastname", lastname);
+        req.getSession().setAttribute("email", email);
+        req.getSession().setAttribute("password", password);
         String[] roles = req.getParameterValues("selectedRoles");
-
-        if(ServiceFactory.getInstance().getUserService().getByEmail(email) != null)
-
-        log.info("Register user with firstname {}, lastname {},email {},roles {}", firstname, lastname, email, roles);
-
-        User user = new User(firstname, lastname, email, DigestMD5Helper.computeHash(password));
-        if (roles != null) {
-            for (String role : roles) {
-                user.addRole(Role.valueOf(role));
+        if (ServiceFactory.getInstance().getUserService().getByEmail(email) != null) {
+            log.info("Register user with firstname {}, lastname {},email {},roles {}", firstname, lastname, email, roles);
+            User user = new User(firstname, lastname, email, DigestMD5Helper.computeHash(password));
+            if (roles != null) {
+                for (String role : roles) {
+                    user.addRole(Role.valueOf(role));
+                }
             }
+            ServiceFactory.getInstance().getUserService().create(user);
         }
-        ServiceFactory.getInstance().getUserService().create(user);
         return req.getParameter("from") == null ? ConfigManager.getInstance().getProperty(ConfigManager.LOGIN_PAGE_PATH) : req.getParameter("from").substring(req.getContextPath().length());
     }
 }

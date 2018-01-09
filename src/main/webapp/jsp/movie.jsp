@@ -20,7 +20,7 @@
         </li>
         <li>
             <label>${lang['show.movie']}</label>
-            <input type="text" name="movie" required/>
+            <input type="text" name="movie" value="${sessionScope.movie}" required/>
         </li>
         <li>
             <input type="submit" value="${lang['entity.add']}">
