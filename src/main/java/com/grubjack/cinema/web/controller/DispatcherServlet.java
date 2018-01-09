@@ -2,6 +2,7 @@ package com.grubjack.cinema.web.controller;
 
 import com.grubjack.cinema.exception.DaoException;
 import com.grubjack.cinema.util.ConfigManager;
+import com.grubjack.cinema.util.LocaleResourceBundle;
 import com.grubjack.cinema.web.command.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LocaleResourceBundle.setFor(req);
         String page;
         try {
             Command command = RequestHelper.getInstance().getCommand(req);

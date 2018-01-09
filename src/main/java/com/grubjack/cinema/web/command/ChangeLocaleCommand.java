@@ -1,6 +1,6 @@
 package com.grubjack.cinema.web.command;
 
-import com.grubjack.cinema.util.LocalePropertyManager;
+import com.grubjack.cinema.util.LocaleResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public class ChangeLocaleCommand implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String lang = req.getParameter("language");
         log.info("Change locale to {}", lang);
-        LocalePropertyManager.getInstance(req).setLocale(new Locale(lang));
+        LocaleResourceBundle.getInstance(req).setLocale(new Locale(lang));
         return req.getParameter("from") == null ? new ShowScheduleCommand().execute(req, resp) : req.getParameter("from").substring(req.getContextPath().length());
     }
 }

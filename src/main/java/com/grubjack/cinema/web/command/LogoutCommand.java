@@ -1,6 +1,6 @@
 package com.grubjack.cinema.web.command;
 
-import com.grubjack.cinema.util.LocalePropertyManager;
+import com.grubjack.cinema.util.LocaleResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ public class LogoutCommand implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         log.info("Executing with session id {}", req.getSession().getId());
         req.getSession().invalidate();
-        req.setAttribute(LocalePropertyManager.MESSAGE_ATTRIBUTE_NAME, new LocalePropertyManager(req.getLocale()));
+        LocaleResourceBundle.setFor(req);
         return new ShowScheduleCommand().execute(req, resp);
     }
 }

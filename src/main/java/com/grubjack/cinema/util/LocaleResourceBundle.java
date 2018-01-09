@@ -11,30 +11,30 @@ import java.util.ResourceBundle;
 /**
  * Created by Urban Aleksandr
  */
-public class LocalePropertyManager extends ResourceBundle {
-    private static Logger log = LoggerFactory.getLogger(LocalePropertyManager.class);
-    public static final String MESSAGE_ATTRIBUTE_NAME = "lang";
+public class LocaleResourceBundle extends ResourceBundle {
+    private static Logger log = LoggerFactory.getLogger(LocaleResourceBundle.class);
+    private static final String MESSAGE_ATTRIBUTE_NAME = "lang";
     private static final String MESSAGE_BASE_NAME = "message/message";
 
-    public LocalePropertyManager(Locale locale) {
-        log.info("Set locale {} ", locale);
+    private LocaleResourceBundle(Locale locale) {
         setLocale(locale);
     }
 
     public static void setFor(HttpServletRequest request) {
         if (request.getSession().getAttribute(MESSAGE_ATTRIBUTE_NAME) == null) {
-            request.getSession().setAttribute(MESSAGE_ATTRIBUTE_NAME, new LocalePropertyManager(request.getLocale()));
+            request.getSession().setAttribute(MESSAGE_ATTRIBUTE_NAME, new LocaleResourceBundle(request.getLocale()));
         }
     }
 
     public void setLocale(Locale locale) {
         if (parent == null || !parent.getLocale().equals(locale)) {
+            log.info("Set locale {} ", locale);
             setParent(getBundle(MESSAGE_BASE_NAME, locale));
         }
     }
 
-    public static LocalePropertyManager getInstance(HttpServletRequest request) {
-        return (LocalePropertyManager) request.getSession().getAttribute(MESSAGE_ATTRIBUTE_NAME);
+    public static LocaleResourceBundle getInstance(HttpServletRequest request) {
+        return (LocaleResourceBundle) request.getSession().getAttribute(MESSAGE_ATTRIBUTE_NAME);
     }
 
     @Override

@@ -13,8 +13,6 @@ public class ConfigManager {
     public static final String REGISTER_PAGE_PATH = "REGISTER_PAGE_PATH";
     public static final String TICKETS_PAGE_PATH = "TICKETS_PAGE_PATH";
     public static final String USERS_PAGE_PATH = "USERS_PAGE_PATH";
-    public static final String PARAM_USER_LOGIN = "PARAM_USER_LOGIN";
-    public static final String PARAM_USER_PASSWORD = "PARAM_USER_PASSWORD";
     public static final String HALL_ROW_VALUE = "HALL_ROW_VALUE";
     public static final String HALL_SEAT_VALUE = "HALL_SEAT_VALUE";
     public static final String MOVIE_PAGE_PATH = "MOVIE_PAGE_PATH";
