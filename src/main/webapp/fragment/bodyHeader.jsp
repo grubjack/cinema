@@ -1,36 +1,39 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<p><a class="button" href="${pageContext.request.contextPath}/">${locale['app.home']}</a></p>
+<jsp:include page="/jsp/lang.jsp"/>
+<p><a class="button" href="${pageContext.request.contextPath}/">${lang['app.home']}</a></p>
 <c:choose>
     <c:when test="${loggedUser != null}">
-        ${locale['user.logged']}, ${loggedUser.lastName} ${loggedUser.firstName}
+        ${lang['user.logged']}, ${loggedUser.lastName} ${loggedUser.firstName}
         <br>
         <br>
         <c:if test="${loggedUser.hasRole('ROLE_USER')}">
             <form method="post" action="${pageContext.request.contextPath}/">
                 <input type="hidden" name="command" value="tickets">
-                <input class="button" type="submit" value="${locale['ticket.title']}">
+                <input class="button" type="submit" value="${lang['ticket.title']}">
             </form>
         </c:if>
         <c:if test="${loggedUser.hasRole('ROLE_ADMIN')}">
             <form method="post" action="${pageContext.request.contextPath}/">
                 <input type="hidden" name="command" value="users">
-                <input class="button" type="submit" value="${locale['users.title']}">
+                <input class="button" type="submit" value="${lang['users.title']}">
             </form>
         </c:if>
         <form method="post" action="${pageContext.request.contextPath}/">
             <input type="hidden" name="command" value="logout">
-            <input class="button" type="submit" value="${locale['app.logout']}">
+            <input class="button" type="submit" value="${lang['app.logout']}">
         </form>
     </c:when>
     <c:otherwise>
         <form method="post" action="${pageContext.request.contextPath}/">
             <input type="hidden" name="command" value="login">
-            <input class="button" type="submit" value="${locale['app.login']}">
+            <input type="hidden" name="from" value="${pageContext.request.requestURI}">
+            <input class="button" type="submit" value="${lang['app.login']}">
         </form>
         <form method="post" action="${pageContext.request.contextPath}/">
             <input type="hidden" name="command" value="addUser">
-            <input class="button" type="submit" value="${locale['app.register']}">
+            <input type="hidden" name="from" value="${pageContext.request.requestURI}">
+            <input class="button" type="submit" value="${lang['app.register']}">
         </form>
     </c:otherwise>
 </c:choose>

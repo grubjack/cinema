@@ -22,7 +22,7 @@ table {
     color: #666;
     font-size: 12px;
     background: #eaebec;
-    background-color:rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
     margin: 20px;
     border: #ccc 1px solid;
     margin-left: auto;
@@ -222,4 +222,16 @@ input[type=submit].button, a:link.button, a:visited.button {
 
 a:hover.button, a:active.button {
     background-color: #4691A4;
+}
+
+select#lang option[value="en"] {
+    background-image: url("images/en.png");
+}
+
+select#lang option[value="ru"] {
+    background-image: url("images/ru.png");
+}
+
+select#lang option[value="uk"] {
+    background-image: url("images/uk.png");
 }
