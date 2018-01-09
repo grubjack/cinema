@@ -8,23 +8,23 @@
     <ul class="form-style-1">
         <input type="hidden" name="command" value="createMovie">
         <li>
-            <h2>${locale['movie.add']}</h2>
+            <h2>${lang['movie.add']}</h2>
         </li>
         <li>
-            <label>${locale['show.day']}</label>
-            <input type="text" value="${locale['day.'.concat(fn:toLowerCase(day))]}" disabled/>
+            <label>${lang['show.day']}</label>
+            <input type="text" value="${lang['day.'.concat(fn:toLowerCase(day))]}" disabled/>
         </li>
         <li>
-            <label>${locale['show.time']}</label>
+            <label>${lang['show.time']}</label>
             <input type="text" value="${time}" disabled/>
         </li>
         <li>
-            <label>${locale['show.movie']}</label>
+            <label>${lang['show.movie']}</label>
             <input type="text" name="movie" required/>
         </li>
         <li>
-            <input type="submit" value="${locale['entity.add']}">
-            <input type="reset" value="${locale['app.reset']}"/>
+            <input type="submit" value="${lang['entity.add']}">
+            <input type="reset" value="${lang['app.reset']}"/>
         </li>
     </ul>
 </form>

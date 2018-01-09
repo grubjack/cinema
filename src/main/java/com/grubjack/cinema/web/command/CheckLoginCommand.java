@@ -28,9 +28,7 @@ public class CheckLoginCommand implements Command {
             User user = getInstance().getUserService().getByEmail(login);
             if (user != null) {
                 req.getSession().setAttribute("loggedUser", user);
-                Command sourceCommand = (Command) req.getSession().getAttribute("sourceCommand");
-                log.info("Source command: {}", sourceCommand);
-                return sourceCommand == null ? new ShowScheduleCommand().execute(req, resp) : sourceCommand.execute(req, resp);
+                return req.getParameter("from") == null ? new ShowScheduleCommand().execute(req, resp) : req.getParameter("from").substring(req.getContextPath().length());
             }
         } else {
             String errorMessage = "Invalid credentials";

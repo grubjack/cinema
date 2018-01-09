@@ -38,6 +38,6 @@ public class RegistrationUserCommand implements Command {
             }
         }
         ServiceFactory.getInstance().getUserService().create(user);
-        return ConfigManager.getInstance().getProperty(ConfigManager.LOGIN_PAGE_PATH);
+        return req.getParameter("from") == null ? ConfigManager.getInstance().getProperty(ConfigManager.LOGIN_PAGE_PATH) : req.getParameter("from").substring(req.getContextPath().length());
     }
 }

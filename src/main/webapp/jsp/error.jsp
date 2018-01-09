@@ -4,6 +4,6 @@
 <jsp:include page="/fragment/headTag.jsp"/>
 <body>
 <jsp:include page="/fragment/bodyHeader.jsp"/>
-<h1>${locale['app.error']}: ${errorMessage != null ? errorMessage : locale['error.unknown']}</h1>
+<h1>${lang['app.error']}: ${errorMessage != null ? errorMessage : lang['error.unknown']}</h1>
 </body>
 </html>

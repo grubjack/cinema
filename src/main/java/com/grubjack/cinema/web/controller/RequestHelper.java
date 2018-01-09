@@ -32,6 +32,7 @@ public class RequestHelper {
         commands.put("users", new ShowUsersCommand());
         commands.put("deleteUser", new DeleteUserCommand());
         commands.put("buyTicket", new BuyTicketCommand());
+        commands.put("changeLocale", new ChangeLocaleCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {
