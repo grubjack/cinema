@@ -54,15 +54,6 @@
         <location>/jsp/error.jsp</location>
     </error-page>
 
-    <context-param>
-        <param-name>
-            javax.servlet.jsp.jstl.fmt.locale
-        </param-name>
-        <param-value>
-            en_US
-        </param-value>
-    </context-param>
-
     <jsp-config>
         <taglib>
             <taglib-uri>http://cinema.grubjack.com/functions</taglib-uri>
