@@ -130,10 +130,22 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement statement = null;
         try {
             connection = getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement("UPDATE tickets SET sold=?,user_id=? WHERE user_id=?");
+            statement.setBoolean(1, false);
+            statement.setNull(2, java.sql.Types.INTEGER);
+            statement.setInt(3, id);
+            statement.executeUpdate();
             statement = connection.prepareStatement("DELETE FROM users WHERE id=?");
             statement.setInt(1, id);
             statement.execute();
+            connection.commit();
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                log.error("Can't rollback connection", e1);
+            }
             log.error("Can't delete user", e);
             throw new DaoException("Can't delete user", e);
         } finally {
