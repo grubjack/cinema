@@ -12,8 +12,6 @@ public interface TicketDao {
 
     void create(Ticket ticket, int showId) throws DaoException;
 
-    void generate(int showId) throws DaoException;
-
     void update(Ticket ticket, int showId) throws DaoException;
 
     void delete(int id) throws DaoException;

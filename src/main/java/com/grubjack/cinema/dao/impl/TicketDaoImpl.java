@@ -3,7 +3,6 @@ package com.grubjack.cinema.dao.impl;
 import com.grubjack.cinema.dao.TicketDao;
 import com.grubjack.cinema.exception.DaoException;
 import com.grubjack.cinema.model.Ticket;
-import com.grubjack.cinema.util.ConfigManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,53 +68,8 @@ public class TicketDaoImpl implements TicketDao {
     }
 
     @Override
-    public void generate(int showId) throws DaoException {
-        log.info("Generate tickets for show with id {}", showId);
-        //todo
-        int price = 10;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = getConnection();
-            String totalRows = ConfigManager.getInstance().getProperty(ConfigManager.HALL_ROW_VALUE);
-            String seatsPerRow = ConfigManager.getInstance().getProperty(ConfigManager.HALL_SEAT_VALUE);
-
-            statement = connection.prepareStatement("INSERT INTO tickets (row, seat, price, show_id) VALUES (?,?,?,?)");
-            for (int row = 1; row <= Integer.parseInt(totalRows); row++) {
-                for (int seat = 1; seat <= Integer.parseInt(seatsPerRow); seat++) {
-                    statement.setInt(1, row);
-                    statement.setInt(2, seat);
-                    statement.setInt(3, price);
-                    statement.setInt(4, showId);
-                    statement.addBatch();
-                }
-            }
-            statement.executeBatch();
-
-        } catch (SQLException e) {
-            log.error("Can't generate tickets", e);
-            throw new DaoException("Can't generate tickets", e);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    log.error("Can't close statement", e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    log.error("Can't close connection", e);
-                }
-            }
-        }
-    }
-
-    @Override
     public void update(Ticket ticket, int showId) throws DaoException {
-        log.info("Updating ticket with id " + ticket.getId());
+        log.info("Updating ticket with id {}", ticket.getId());
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -151,7 +105,7 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public void delete(int id) throws DaoException {
-        log.info("Deleting ticket with id " + id);
+        log.info("Deleting ticket with id {}", id);
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -165,6 +119,7 @@ public class TicketDaoImpl implements TicketDao {
         } finally {
             if (statement != null) {
                 try {
+                    statement.close();
                     statement.close();
                 } catch (SQLException e) {
                     log.error("Can't close statement", e);
@@ -182,7 +137,7 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public Ticket find(int id) throws DaoException {
-        log.info("Finding ticket with id " + id);
+        log.info("Finding ticket with id {}", id);
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -280,7 +235,7 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public List<Ticket> findByUser(int userId) throws DaoException {
-        log.info("Finding all tickets by user with id " + userId);
+        log.info("Finding all tickets by user with id {}", userId);
         List<Ticket> result = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -330,7 +285,7 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public List<Ticket> findByShow(int showId) throws DaoException {
-        log.info("Finding all tickets by show with id " + showId);
+        log.info("Finding all tickets by show with id {}", showId);
         List<Ticket> result = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;

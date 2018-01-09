@@ -151,7 +151,7 @@ public class ShowDaoImpl implements ShowDao {
 
     @Override
     public Show find(int id) throws DaoException {
-        log.info("Finding show with id " + id);
+        log.info("Finding show with id {}", id);
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
