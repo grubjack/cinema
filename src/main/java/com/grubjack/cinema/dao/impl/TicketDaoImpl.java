@@ -18,6 +18,16 @@ import static com.grubjack.cinema.dao.DaoFactory.getConnection;
 public class TicketDaoImpl implements TicketDao {
 
     private static Logger log = LoggerFactory.getLogger(TicketDaoImpl.class);
+    private static final String CREATE_SHOW_TICKET_SQL = "INSERT INTO tickets (row, seat, price, sold, show_id) VALUES (?,?,?,?,?)";
+    private static final String UPDATE_SHOW_TICKET_SQL = "UPDATE tickets SET row=?, seat=?, price=?, sold=?, show_id=? WHERE id=?";
+    private static final String UPDATE_TICKET_SQL = "DELETE FROM tickets WHERE id=?";
+    private static final String FIND_TICKET_SQL = "SELECT * FROM tickets WHERE id=?";
+    private static final String FIND_ALL_TICKET_SQL = "SELECT * FROM tickets";
+    private static final String FIND_USER_TICKET_SQL = "SELECT * FROM tickets WHERE user_id=?";
+    private static final String FIND_SHOW_TICKET_SQL = "SELECT * FROM tickets WHERE show_id=?";
+    private static final String FIND_TICKET_BY_STATE_SQL = "SELECT * FROM tickets WHERE sold=?";
+    private static final String UPDATE_USER_TICKET_SQL = "UPDATE tickets SET sold=?,user_id=? WHERE id=?";
+
 
     @Override
     public void create(Ticket ticket, int showId) throws DaoException {
@@ -27,7 +37,7 @@ public class TicketDaoImpl implements TicketDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("INSERT INTO tickets (row, seat, price, sold, show_id) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(CREATE_SHOW_TICKET_SQL, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, ticket.getRow());
             statement.setInt(2, ticket.getSeat());
             statement.setInt(3, ticket.getPrice());
@@ -74,7 +84,7 @@ public class TicketDaoImpl implements TicketDao {
         PreparedStatement statement = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("UPDATE tickets SET row=?, seat=?, price=?, sold=?, show_id=? WHERE id=?");
+            statement = connection.prepareStatement(UPDATE_SHOW_TICKET_SQL);
             statement.setInt(1, ticket.getRow());
             statement.setInt(2, ticket.getSeat());
             statement.setInt(3, ticket.getPrice());
@@ -110,7 +120,7 @@ public class TicketDaoImpl implements TicketDao {
         PreparedStatement statement = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("DELETE FROM tickets WHERE id=?");
+            statement = connection.prepareStatement(UPDATE_TICKET_SQL);
             statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
@@ -144,7 +154,7 @@ public class TicketDaoImpl implements TicketDao {
         Ticket ticket = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM tickets WHERE id=?");
+            statement = connection.prepareStatement(FIND_TICKET_SQL);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -193,7 +203,7 @@ public class TicketDaoImpl implements TicketDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM tickets");
+            statement = connection.prepareStatement(FIND_ALL_TICKET_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Ticket ticket = new Ticket();
@@ -242,7 +252,7 @@ public class TicketDaoImpl implements TicketDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM tickets WHERE user_id=?");
+            statement = connection.prepareStatement(FIND_USER_TICKET_SQL);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -292,7 +302,7 @@ public class TicketDaoImpl implements TicketDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM tickets WHERE show_id=?");
+            statement = connection.prepareStatement(FIND_SHOW_TICKET_SQL);
             statement.setInt(1, showId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -342,7 +352,7 @@ public class TicketDaoImpl implements TicketDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM tickets WHERE sold=?");
+            statement = connection.prepareStatement(FIND_TICKET_BY_STATE_SQL);
             statement.setBoolean(1, sold);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -390,7 +400,7 @@ public class TicketDaoImpl implements TicketDao {
         PreparedStatement statement = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("UPDATE tickets SET sold=?,user_id=? WHERE id=?");
+            statement = connection.prepareStatement(UPDATE_USER_TICKET_SQL);
             statement.setBoolean(1, true);
             statement.setInt(2, userId);
             statement.setInt(3, id);

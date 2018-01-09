@@ -21,6 +21,17 @@ import static com.grubjack.cinema.dao.DaoFactory.getConnection;
 public class ShowDaoImpl implements ShowDao {
 
     private static Logger log = LoggerFactory.getLogger(ShowDaoImpl.class);
+    private static final String CREATE_SHOW_SQL = "INSERT INTO shows (day, time, movie) VALUES (?,?,?)";
+    private static final String CREATE_TICKET_SQL = "INSERT INTO tickets (row, seat, price, show_id) VALUES (?,?,?,?)";
+    private static final String UPDATE_SHOW_SQL = "UPDATE shows SET day=?, time=?, movie=? WHERE id=?";
+    private static final String DELETE_SHOW_SQL = "DELETE FROM shows WHERE id=?";
+    private static final String FIND_SHOW_SQL = "SELECT * FROM shows WHERE id=?";
+    private static final String FIND_ALL_SHOW_SQL = "SELECT * FROM shows ORDER BY day,time";
+    private static final String FIND_SHOW_BY_DATE = "SELECT * FROM shows WHERE day=?";
+    private static final String FIND_SHOW_BY_TIME = "SELECT * FROM shows WHERE time=?";
+    private static final String FIND_SHOW_BY_DATE_TIME = "SELECT * FROM shows WHERE day=? AND time=?";
+    private static final String FIND_SHOW_BY_MOVIE = "SELECT * FROM shows WHERE UPPER(movie) LIKE UPPER(?)";
+    private static final String FIND_SHOW_BY_TICKET = "SELECT s.id AS id, s.day,s.time,s.movie,t.id AS tid FROM shows s INNER JOIN tickets t ON s.id = t.show_id WHERE t.id=?";
 
     @Override
     public void create(Show show) throws DaoException {
@@ -31,7 +42,7 @@ public class ShowDaoImpl implements ShowDao {
         try {
             connection = getConnection();
             connection.setAutoCommit(false);
-            statement = connection.prepareStatement("INSERT INTO shows (day, time, movie) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(CREATE_SHOW_SQL, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, show.getDayOfWeek().toString());
             statement.setString(2, show.getTimeOfDay().toString());
             statement.setString(3, show.getMovie());
@@ -41,7 +52,7 @@ public class ShowDaoImpl implements ShowDao {
                 show.setId(resultSet.getInt(1));
                 log.info("Show is created with id = " + show.getId());
             }
-            statement = connection.prepareStatement("INSERT INTO tickets (row, seat, price, show_id) VALUES (?,?,?,?)");
+            statement = connection.prepareStatement(CREATE_TICKET_SQL);
             for (Ticket ticket : show.getTickets()) {
                 statement.setInt(1, ticket.getRow());
                 statement.setInt(2, ticket.getSeat());
@@ -91,7 +102,7 @@ public class ShowDaoImpl implements ShowDao {
         PreparedStatement statement = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("UPDATE shows SET day=?, time=?, movie=? WHERE id=?");
+            statement = connection.prepareStatement(UPDATE_SHOW_SQL);
             statement.setString(1, show.getDayOfWeek().toString());
             statement.setString(2, show.getTimeOfDay().toString());
             statement.setString(3, show.getMovie());
@@ -125,7 +136,7 @@ public class ShowDaoImpl implements ShowDao {
         PreparedStatement statement = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("DELETE FROM shows WHERE id=?");
+            statement = connection.prepareStatement(DELETE_SHOW_SQL);
             statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
@@ -158,7 +169,7 @@ public class ShowDaoImpl implements ShowDao {
         Show show = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM shows WHERE id=?");
+            statement = connection.prepareStatement(FIND_SHOW_SQL);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -206,7 +217,7 @@ public class ShowDaoImpl implements ShowDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM shows ORDER BY day,time");
+            statement = connection.prepareStatement(FIND_ALL_SHOW_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Show show = new Show();
@@ -254,7 +265,7 @@ public class ShowDaoImpl implements ShowDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM shows WHERE day=?");
+            statement = connection.prepareStatement(FIND_SHOW_BY_DATE);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Show show = new Show();
@@ -302,7 +313,7 @@ public class ShowDaoImpl implements ShowDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM shows WHERE time=?");
+            statement = connection.prepareStatement(FIND_SHOW_BY_TIME);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Show show = new Show();
@@ -350,7 +361,7 @@ public class ShowDaoImpl implements ShowDao {
         Show show = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM shows WHERE day=? AND time=?");
+            statement = connection.prepareStatement(FIND_SHOW_BY_DATE_TIME);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 show = new Show();
@@ -397,7 +408,7 @@ public class ShowDaoImpl implements ShowDao {
         ResultSet resultSet = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM shows WHERE UPPER(movie) LIKE UPPER(?)");
+            statement = connection.prepareStatement(FIND_SHOW_BY_MOVIE);
             statement.setString(1, movie);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -447,7 +458,7 @@ public class ShowDaoImpl implements ShowDao {
         Show show = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT s.id as id, s.day,s.time,s.movie,t.id as tid FROM shows s INNER JOIN tickets t ON s.id = t.show_id WHERE t.id=?");
+            statement = connection.prepareStatement(FIND_SHOW_BY_TICKET);
             statement.setInt(1, ticketId);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {

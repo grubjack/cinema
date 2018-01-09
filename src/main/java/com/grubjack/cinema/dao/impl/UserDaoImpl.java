@@ -22,6 +22,14 @@ import static com.grubjack.cinema.dao.DaoFactory.getConnection;
 public class UserDaoImpl implements UserDao {
 
     private static Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
+    private static final String CREATE_USER_SQL = "INSERT INTO users (firstname, lastname, email, password) VALUES (?,?,?,?)";
+    private static final String CREATE_USER_ROLES_SQL = "INSERT INTO user_roles (role,user_id) VALUES (?,?)";
+    private static final String UPDATE_USER_SQL = "UPDATE users SET firstname=?,lastname=?,email=?,password=? WHERE id=?";
+    private static final String UPDATE_USER_TICKETS_SQL = "UPDATE tickets SET sold=?,user_id=? WHERE user_id=?";
+    private static final String DELETE_USER_SQL = "DELETE FROM users WHERE id=?";
+    private static final String FIND_USER_SQL = "SELECT * FROM users WHERE id=?";
+    private static final String FIND_ALL_USER_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id";
+    private static final String FIND_USER_BY_EMAIL_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id WHERE LOWER(email) LIKE LOWER(?)";
 
     @Override
     public void create(User user) throws DaoException {
@@ -32,7 +40,7 @@ public class UserDaoImpl implements UserDao {
         try {
             connection = getConnection();
             connection.setAutoCommit(false);
-            statement = connection.prepareStatement("INSERT INTO users (firstname, lastname, email, password) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmail());
@@ -43,7 +51,7 @@ public class UserDaoImpl implements UserDao {
                 user.setId(resultSet.getInt(1));
                 log.info("User is created with id = " + user.getId());
             }
-            statement = connection.prepareStatement("INSERT INTO user_roles (role,user_id) VALUES (?,?)");
+            statement = connection.prepareStatement(CREATE_USER_ROLES_SQL);
             for (Role role : user.getRoles()) {
                 statement.setString(1, role.toString());
                 statement.setInt(2, user.getId());
@@ -94,7 +102,7 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement statement = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("UPDATE users SET firstname=?,lastname=?,email=?,password=? WHERE id=?");
+            statement = connection.prepareStatement(UPDATE_USER_SQL);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getLastName());
@@ -131,12 +139,12 @@ public class UserDaoImpl implements UserDao {
         try {
             connection = getConnection();
             connection.setAutoCommit(false);
-            statement = connection.prepareStatement("UPDATE tickets SET sold=?,user_id=? WHERE user_id=?");
+            statement = connection.prepareStatement(UPDATE_USER_TICKETS_SQL);
             statement.setBoolean(1, false);
             statement.setNull(2, java.sql.Types.INTEGER);
             statement.setInt(3, id);
             statement.executeUpdate();
-            statement = connection.prepareStatement("DELETE FROM users WHERE id=?");
+            statement = connection.prepareStatement(DELETE_USER_SQL);
             statement.setInt(1, id);
             statement.execute();
             connection.commit();
@@ -175,7 +183,7 @@ public class UserDaoImpl implements UserDao {
         User user = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            statement = connection.prepareStatement(FIND_USER_SQL);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -224,7 +232,7 @@ public class UserDaoImpl implements UserDao {
         Map<Integer, User> userById = new HashMap<>();
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id");
+            statement = connection.prepareStatement(FIND_ALL_USER_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -281,7 +289,7 @@ public class UserDaoImpl implements UserDao {
         Map<Integer, User> userById = new HashMap<>();
         try {
             connection = getConnection();
-            statement = connection.prepareStatement("SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id WHERE LOWER(email) LIKE LOWER(?)");
+            statement = connection.prepareStatement(FIND_USER_BY_EMAIL_SQL);
             statement.setString(1, email);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
