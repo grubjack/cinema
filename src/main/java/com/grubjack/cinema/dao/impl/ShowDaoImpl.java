@@ -57,15 +57,17 @@ public class ShowDaoImpl implements ShowDao {
                 show.setId(resultSet.getInt(1));
                 log.info("Show is created with id = " + show.getId());
             }
-            statement = connection.prepareStatement(CREATE_TICKET_SQL);
-            for (Ticket ticket : show.getTickets()) {
-                statement.setInt(1, ticket.getRow());
-                statement.setInt(2, ticket.getSeat());
-                statement.setInt(3, ticket.getPrice());
-                statement.setInt(4, show.getId());
-                statement.addBatch();
+            if (show.getTickets().size() > 0) {
+                statement = connection.prepareStatement(CREATE_TICKET_SQL);
+                for (Ticket ticket : show.getTickets()) {
+                    statement.setInt(1, ticket.getRow());
+                    statement.setInt(2, ticket.getSeat());
+                    statement.setInt(3, ticket.getPrice());
+                    statement.setInt(4, show.getId());
+                    statement.addBatch();
+                }
+                statement.executeBatch();
             }
-            statement.executeBatch();
             connection.commit();
         } catch (SQLException e) {
             try {
@@ -271,6 +273,7 @@ public class ShowDaoImpl implements ShowDao {
         try {
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_DATE);
+            statement.setString(1, dayOfWeek.name());
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Show show = new Show();
@@ -319,6 +322,7 @@ public class ShowDaoImpl implements ShowDao {
         try {
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_TIME);
+            statement.setString(1, timeOfDay.toString());
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Show show = new Show();
@@ -367,6 +371,8 @@ public class ShowDaoImpl implements ShowDao {
         try {
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_DATE_TIME);
+            statement.setString(1, dayOfWeek.name());
+            statement.setString(2, timeOfDay.toString());
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 show = new Show();
