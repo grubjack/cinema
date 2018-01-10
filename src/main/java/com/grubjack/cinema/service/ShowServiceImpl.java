@@ -1,5 +1,6 @@
 package com.grubjack.cinema.service;
 
+import com.grubjack.cinema.dao.DaoFactory;
 import com.grubjack.cinema.dao.ShowDao;
 import com.grubjack.cinema.dao.TicketDao;
 import com.grubjack.cinema.exception.DaoException;
@@ -54,9 +55,9 @@ public class ShowServiceImpl implements ShowService {
         showDao.delete(showId);
     }
 
-    public Show findByTicket(int ticketId) throws DaoException {
+    public static Show findByTicket(int ticketId) throws DaoException {
         log.info("Get show by ticket with id {}", ticketId);
-        return showDao.findByTicket(ticketId);
+        return DaoFactory.getInstance().getShowDao().findByTicket(ticketId);
     }
 
     @Override

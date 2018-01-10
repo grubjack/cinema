@@ -41,7 +41,7 @@ public class DispatcherServlet extends HttpServlet {
             String errorMessage = e.getLocalizedMessage();
             log.error("Error: {}", errorMessage);
             log.error("Error StackTrace: {}", e);
-            request.getSession().setAttribute(ERROR_MESSAGE_ATTR, errorMessage);
+            request.setAttribute(ERROR_MESSAGE_ATTR, errorMessage);
             page = getInstance().getProperty(ERROR_PAGE_PATH);
         }
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
