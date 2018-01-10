@@ -57,12 +57,14 @@ public class UserDaoImpl implements UserDao {
                 log.info("User is created with id = " + user.getId());
             }
             statement = connection.prepareStatement(CREATE_USER_ROLES_SQL);
-            for (Role role : user.getRoles()) {
-                statement.setString(1, role.toString());
-                statement.setInt(2, user.getId());
-                statement.addBatch();
+            if (user.getRoles().size() > 0) {
+                for (Role role : user.getRoles()) {
+                    statement.setString(1, role.toString());
+                    statement.setInt(2, user.getId());
+                    statement.addBatch();
+                }
+                statement.executeBatch();
             }
-            statement.executeBatch();
             connection.commit();
         } catch (SQLIntegrityConstraintViolationException e) {
             log.error("User with this email already exist", e);
