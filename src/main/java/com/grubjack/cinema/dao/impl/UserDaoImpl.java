@@ -109,9 +109,8 @@ public class UserDaoImpl implements UserDao {
             statement = connection.prepareStatement(UPDATE_USER_SQL);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
-            statement.setString(3, user.getLastName());
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPassword());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
             statement.setInt(5, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
