@@ -5,13 +5,37 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * {@code User} user entity
+ */
 public class User implements Serializable {
     private int id;
+    /**
+     * Mark firstName of user
+     */
     private String firstName;
+    /**
+     * Mark lastName of user
+     */
     private String lastName;
+    /**
+     * Mark email of user.
+     * It must be unique
+     * There is not allowed to have the same email by a few users
+     */
     private String email;
+    /**
+     * Mark password of user
+     * It stored in encrypted view in DB (default MD5)
+     */
     private String password;
+    /**
+     * Roles of users, set users privileges in application
+     */
     private Set<Role> roles = new HashSet<>();
+    /**
+     * Tickets bought by user
+     */
     private Set<Ticket> tickets = new HashSet<>();
 
     public User() {
@@ -102,6 +126,11 @@ public class User implements Serializable {
         return roles.contains(Role.valueOf(role));
     }
 
+    /**
+     * Allows to add new role for user
+     *
+     * @param role role for adding
+     */
     public void addRole(Role role) {
         roles.add(role);
     }

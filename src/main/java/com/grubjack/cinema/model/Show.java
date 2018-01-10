@@ -5,11 +5,27 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * {@code Show} movie show entity
+ */
 public class Show implements Serializable {
     private int id;
+    /**
+     * Mark day of show
+     */
     private DayOfWeek dayOfWeek;
+    /**
+     * Mark time during the day
+     */
     private TimeOfDay timeOfDay;
+    /**
+     * Movie title
+     */
     private String movie;
+    /**
+     * Each show includes the tickets on it
+     * Ticket belongs to movie show, user can buy it as well
+     */
     private Set<Ticket> tickets = new HashSet<>();
 
     public Show() {

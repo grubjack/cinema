@@ -3,11 +3,27 @@ package com.grubjack.cinema.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * {@code Ticket} ticket entity
+ */
 public class Ticket implements Serializable {
     private int id;
+    /**
+     * Mark row in the hall
+     */
     private int row;
+    /**
+     * Mark seat int the row
+     */
     private int seat;
+    /**
+     * Mark price
+     * It depends on time of movie show
+     */
     private int price;
+    /**
+     * Mark available for buy of ticket
+     */
     private boolean sold;
 
     public Ticket() {
