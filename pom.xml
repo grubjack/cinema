@@ -59,6 +59,14 @@
             <version>${mysql.version}</version>
         </dependency>
 
+        <!-- HSQLDB-->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Logging with SLF4J & Log4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
