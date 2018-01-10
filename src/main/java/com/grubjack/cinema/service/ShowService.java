@@ -2,6 +2,7 @@ package com.grubjack.cinema.service;
 
 import com.grubjack.cinema.exception.DaoException;
 import com.grubjack.cinema.model.Show;
+import com.grubjack.cinema.model.TimeOfDay;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ShowService {
     int getAttendance(int showId) throws DaoException;
 
     Show findByDayAndTime(String day, String time) throws DaoException;
+
+    int computeCost(TimeOfDay timeOfDay);
 }

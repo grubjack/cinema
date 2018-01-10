@@ -72,7 +72,8 @@ public class ShowServiceImpl implements ShowService {
         return (int) (showTickets.stream().filter(Ticket::isSold).count() * 100 / showTickets.size());
     }
 
-    private int computeCost(TimeOfDay timeOfDay) {
+    @Override
+    public int computeCost(TimeOfDay timeOfDay) {
         int result = 0;
         switch (timeOfDay) {
             case FIRST:
