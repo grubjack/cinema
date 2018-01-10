@@ -1,5 +1,7 @@
 package com.grubjack.cinema.service;
 
+import com.grubjack.cinema.dao.DaoFactory;
+
 /**
  * Created by Urban Aleksandr
  */
@@ -18,14 +20,14 @@ public class ServiceFactory {
 
 
     public UserService getUserService() {
-        return new UserServiceImpl();
+        return new UserServiceImpl(DaoFactory.getInstance().getUserDao());
     }
 
     public TicketService getTicketService() {
-        return new TicketServiceImpl();
+        return new TicketServiceImpl(DaoFactory.getInstance().getTicketDao());
     }
 
     public ShowService getShowService() {
-        return new ShowServiceImpl();
+        return new ShowServiceImpl(DaoFactory.getInstance().getShowDao(), DaoFactory.getInstance().getTicketDao());
     }
 }
