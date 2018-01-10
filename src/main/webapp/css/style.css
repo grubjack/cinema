@@ -20,7 +20,7 @@ table a:hover {
 table {
     font-family: Arial, Helvetica, sans-serif;
     color: #666;
-    font-size: 12px;
+    font-size: 14px;
     background: #eaebec;
     background-color: rgba(0, 0, 0, 0);
     margin: 20px;
@@ -36,6 +36,7 @@ table th {
 }
 
 table tr {
+    height: 80px;
     text-align: center;
     padding-left: 20px;
 }
