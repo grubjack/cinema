@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -27,7 +24,7 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE_USER_TICKETS_SQL = "UPDATE tickets SET sold=?,user_id=? WHERE user_id=?";
     private static final String DELETE_USER_SQL = "DELETE FROM users WHERE id=?";
     private static final String FIND_USER_SQL = "SELECT * FROM users WHERE id=?";
-    private static final String FIND_ALL_USER_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id";
+    private static final String FIND_ALL_USER_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id ORDER BY users.firstname,users.lastname";
     private static final String FIND_USER_BY_EMAIL_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id WHERE LOWER(email) LIKE LOWER(?)";
 
     private DataSource dataSource;
@@ -236,7 +233,7 @@ public class UserDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        Map<Integer, User> userById = new HashMap<>();
+        Map<Integer, User> userById = new LinkedHashMap<>();
         try {
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_ALL_USER_SQL);
