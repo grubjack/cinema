@@ -59,7 +59,7 @@ public class TicketDaoImplTest {
 
     @Test
     public void findAll() throws DaoException {
-        Assert.assertEquals(320, ticketDao.findAll().size());
+        Assert.assertEquals(1120, ticketDao.findAll().size());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class TicketDaoImplTest {
 
     @Test
     public void findByShow() throws DaoException {
-        Assert.assertEquals(8, ticketDao.findByShow(1).size());
+        Assert.assertEquals(28, ticketDao.findByShow(1).size());
     }
 
     @Test

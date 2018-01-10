@@ -29,7 +29,7 @@ public class ShowServiceImplTest {
     public void create() throws DaoException {
         Show show = new Show(DayOfWeek.SUNDAY, TimeOfDay.SIXTH, "Test movie");
         showService.create(show);
-        Assert.assertEquals(8, ticketDao.findByShow(show.getId()).size());
+        Assert.assertEquals(28, ticketDao.findByShow(show.getId()).size());
     }
 
     @Test
