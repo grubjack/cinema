@@ -40,7 +40,7 @@ public class TicketServiceImpl implements TicketService {
             log.info("Get ticket of show with id {} and place row: {}, seat: {}", showId, row, seat);
             showTickets = ticketDao.findByShow(Integer.parseInt(showId));
         }
-        return showTickets.stream().filter(t -> t.getRow() == row).filter(t -> t.getSeat() == seat).collect(Collectors.toList()).get(0);
+        return showTickets.stream().filter(t -> t.getRow() == row && t.getSeat() == seat).collect(Collectors.toList()).get(0);
     }
 
     @Override
