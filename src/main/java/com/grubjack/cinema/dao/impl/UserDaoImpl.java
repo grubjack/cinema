@@ -7,13 +7,12 @@ import com.grubjack.cinema.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.grubjack.cinema.dao.DaoFactory.getConnection;
 
 
 /**
@@ -31,6 +30,12 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_ALL_USER_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id";
     private static final String FIND_USER_BY_EMAIL_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id WHERE LOWER(email) LIKE LOWER(?)";
 
+    private DataSource dataSource;
+
+    public UserDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public void create(User user) throws DaoException {
         log.info("Creating new user");
@@ -38,7 +43,7 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getFirstName());
@@ -101,7 +106,7 @@ public class UserDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(UPDATE_USER_SQL);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
@@ -137,7 +142,7 @@ public class UserDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(UPDATE_USER_TICKETS_SQL);
             statement.setBoolean(1, false);
@@ -182,7 +187,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         User user = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_USER_SQL);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
@@ -231,7 +236,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         Map<Integer, User> userById = new HashMap<>();
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_ALL_USER_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -288,7 +293,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet resultSet = null;
         Map<Integer, User> userById = new HashMap<>();
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_USER_BY_EMAIL_SQL);
             statement.setString(1, email);
             resultSet = statement.executeQuery();

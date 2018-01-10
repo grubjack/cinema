@@ -9,11 +9,10 @@ import com.grubjack.cinema.model.TimeOfDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.grubjack.cinema.dao.DaoFactory.getConnection;
 
 /**
  * Created by Urban Aleksandr
@@ -33,6 +32,12 @@ public class ShowDaoImpl implements ShowDao {
     private static final String FIND_SHOW_BY_MOVIE = "SELECT * FROM shows WHERE UPPER(movie) LIKE UPPER(?)";
     private static final String FIND_SHOW_BY_TICKET = "SELECT s.id AS id, s.day,s.time,s.movie,t.id AS tid FROM shows s INNER JOIN tickets t ON s.id = t.show_id WHERE t.id=?";
 
+    private DataSource dataSource;
+
+    public ShowDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public void create(Show show) throws DaoException {
         log.info("Creating new show");
@@ -40,7 +45,7 @@ public class ShowDaoImpl implements ShowDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(CREATE_SHOW_SQL, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, show.getDayOfWeek().toString());
@@ -101,7 +106,7 @@ public class ShowDaoImpl implements ShowDao {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(UPDATE_SHOW_SQL);
             statement.setString(1, show.getDayOfWeek().toString());
             statement.setString(2, show.getTimeOfDay().toString());
@@ -135,7 +140,7 @@ public class ShowDaoImpl implements ShowDao {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(DELETE_SHOW_SQL);
             statement.setInt(1, id);
             statement.execute();
@@ -168,7 +173,7 @@ public class ShowDaoImpl implements ShowDao {
         ResultSet resultSet = null;
         Show show = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_SQL);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
@@ -216,7 +221,7 @@ public class ShowDaoImpl implements ShowDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_ALL_SHOW_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -264,7 +269,7 @@ public class ShowDaoImpl implements ShowDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_DATE);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -312,7 +317,7 @@ public class ShowDaoImpl implements ShowDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_TIME);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -360,7 +365,7 @@ public class ShowDaoImpl implements ShowDao {
         ResultSet resultSet = null;
         Show show = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_DATE_TIME);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -407,7 +412,7 @@ public class ShowDaoImpl implements ShowDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_MOVIE);
             statement.setString(1, movie);
             resultSet = statement.executeQuery();
@@ -457,7 +462,7 @@ public class ShowDaoImpl implements ShowDao {
         ResultSet resultSet = null;
         Show show = null;
         try {
-            connection = getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(FIND_SHOW_BY_TICKET);
             statement.setInt(1, ticketId);
             resultSet = statement.executeQuery();
