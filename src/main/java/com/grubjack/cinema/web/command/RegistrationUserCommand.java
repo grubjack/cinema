@@ -40,6 +40,8 @@ public class RegistrationUserCommand implements Command {
             }
         }
         ServiceFactory.getInstance().getUserService().create(user);
-        return (request.getParameter(FROM_PARAM) == null) ? ConfigManager.getInstance().getProperty(LOGIN_PAGE_PATH) : request.getParameter(FROM_PARAM).substring(request.getContextPath().length());
+        String fromPage = request.getParameter(FROM_PARAM);
+        log.info("referer page:  {}", fromPage);
+        return (fromPage != null) && !fromPage.endsWith(ConfigManager.getInstance().getProperty(ERROR_PAGE_PATH)) ? fromPage.substring(request.getContextPath().length()) : ConfigManager.getInstance().getProperty(LOGIN_PAGE_PATH);
     }
 }

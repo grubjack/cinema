@@ -28,7 +28,9 @@ public class CheckLoginCommand implements Command {
             User user = getInstance().getUserService().getByEmail(login);
             if (user != null) {
                 request.getSession().setAttribute(LOGGED_USER_ATTR, user);
-                return request.getParameter(FROM_PARAM) == null ? new ShowScheduleCommand().execute(request, response) : request.getParameter(FROM_PARAM).substring(request.getContextPath().length());
+                String fromPage = request.getParameter(FROM_PARAM);
+                log.info("referer page:  {}", fromPage);
+                return (fromPage != null) && !fromPage.endsWith(ConfigManager.getInstance().getProperty(ERROR_PAGE_PATH)) ? fromPage.substring(request.getContextPath().length()) : ConfigManager.getInstance().getProperty(LOGIN_PAGE_PATH);
             }
         } else {
             String errorMessage = "Invalid credentials";
