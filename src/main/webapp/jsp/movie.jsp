@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="myfn" uri="http://cinema.grubjack.com/functions" %>
 <html>
 <jsp:include page="/fragment/headTag.jsp"/>
 <body>
@@ -12,7 +12,7 @@
         </li>
         <li>
             <label>${lang['show.day']}</label>
-            <input type="text" value="${lang['day.'.concat(fn:toLowerCase(day))]}" disabled/>
+            <input type="text" value="${lang['day.'.concat(myfn:toLowerCase(day))]}" disabled/>
         </li>
         <li>
             <label>${lang['show.time']}</label>

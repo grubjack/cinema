@@ -25,6 +25,7 @@ public class ShowTicketsCommand implements Command {
         if (user != null) {
             log.info("Show tickets for user with id " + user.getId());
             request.getSession().setAttribute(TICKETS_ATTR, ServiceFactory.getInstance().getTicketService().findByUser(user.getId()));
+            request.getSession().setAttribute(SHOW_SERVICE_ATTR, ServiceFactory.getInstance().getShowService());
         }
         return ConfigManager.getInstance().getProperty(TICKETS_PAGE_PATH);
     }

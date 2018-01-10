@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="myfn" uri="http://cinema.grubjack.com/functions" %>
 <jsp:include page="/fragment/headTag.jsp"/>
 <body>
@@ -19,11 +18,11 @@
     </thead>
     <tbody>
     <c:forEach var="ticket" items="${tickets}">
-        <c:set value="${myfn:findByTicket(ticket.id)}" var="show"/>
+        <c:set value="${showService.findByTicket(ticket.id)}" var="show"/>
         <jsp:useBean id="ticket" class="com.grubjack.cinema.model.Ticket"/>
         <jsp:useBean id="show" class="com.grubjack.cinema.model.Show"/>
         <tr>
-            <td>${lang['day.'.concat(fn:toLowerCase(show.dayOfWeek))]}</td>
+            <td>${lang['day.'.concat(myfn:toLowerCase(show.dayOfWeek))]}</td>
             <td>${show.timeOfDay.toString()}</td>
             <td>${show.movie}</td>
             <td>${ticket.row}</td>
