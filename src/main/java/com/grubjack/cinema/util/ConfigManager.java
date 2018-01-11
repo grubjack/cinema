@@ -3,7 +3,9 @@ package com.grubjack.cinema.util;
 import java.util.ResourceBundle;
 
 /**
- * Created by Urban Aleksandr
+ * {@code ConfigManager} utility class
+ * <p>
+ * Provides const keys for bundle with application settings
  */
 public class ConfigManager {
     public static final String ERROR_PAGE_PATH = "ERROR_PAGE_PATH";
@@ -46,10 +48,23 @@ public class ConfigManager {
     public static final String USERS_ATTR = "users";
     public static final String ERROR_MESSAGE_ATTR = "errorMessage";
 
+    /**
+     * Name of property file with application settings
+     */
     private static final String CONFIG_FILENAME = "config";
     private static ConfigManager instance;
+
+
     private ResourceBundle resourceBundle;
 
+    private ConfigManager() {
+    }
+
+    /**
+     * Lazy singleton implementation
+     *
+     * @return instance of class
+     */
     public static ConfigManager getInstance() {
         if (instance == null) {
             instance = new ConfigManager();
@@ -58,6 +73,12 @@ public class ConfigManager {
         return instance;
     }
 
+    /**
+     * Return property by key
+     *
+     * @param key name of key property
+     * @return property related with key
+     */
     public String getProperty(String key) {
         return (String) resourceBundle.getObject(key);
     }
