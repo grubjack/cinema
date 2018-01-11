@@ -37,3 +37,10 @@
         </form>
     </c:otherwise>
 </c:choose>
+<c:if test="${userAdded !=null}">
+    <br><br>
+    <div class="notification">
+            ${lang['user.registered']}
+    </div>
+    <br>
+</c:if>

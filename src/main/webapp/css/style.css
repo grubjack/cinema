@@ -225,14 +225,10 @@ a:hover.button, a:active.button {
     background-color: #4691A4;
 }
 
-select#lang option[value="en"] {
-    background-image: url("images/en.png");
-}
-
-select#lang option[value="ru"] {
-    background-image: url("images/ru.png");
-}
-
-select#lang option[value="uk"] {
-    background-image: url("images/uk.png");
+.notification {
+    font-size: 14pt;
+    color: green;
+    margin: 5px 0 0 0;
+    display: inline-block;
+    float: left;
 }

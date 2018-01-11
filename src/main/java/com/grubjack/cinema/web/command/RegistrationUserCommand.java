@@ -56,6 +56,7 @@ public class RegistrationUserCommand implements Command {
         ServiceFactory.getInstance().getUserService().create(user);
         String fromPage = request.getParameter(FROM_PARAM);
         log.info("referer page:  {}", fromPage);
+        request.setAttribute("userAdded", "");
         return (fromPage != null) && !fromPage.endsWith(ConfigManager.getInstance().getProperty(ERROR_PAGE_PATH)) ? fromPage.substring(request.getContextPath().length()) : ConfigManager.getInstance().getProperty(LOGIN_PAGE_PATH);
     }
 }
