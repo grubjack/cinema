@@ -12,11 +12,21 @@ import java.util.Locale;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code ChangeLocaleCommand} implementation of interface {@code Command}
  */
 public class ChangeLocaleCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(ChangeLocaleCommand.class);
 
+    /**
+     * Get lang parameter from request and change locale bundle
+     *
+     * @param request
+     * @param response
+     * @return forward to previous page using fromPage parameter
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String lang = request.getParameter(LANGUAGE_PARAM);

@@ -10,11 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code AddMovieCommand} implementation of interface {@code Command}
  */
 public class AddMovieCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(AddMovieCommand.class);
 
+    /**
+     * Get day and time parameters from request and save them into session
+     *
+     * @param request
+     * @param response
+     * @return path to movie jsp page
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         log.info("Executing with session id {}", request.getSession().getId());

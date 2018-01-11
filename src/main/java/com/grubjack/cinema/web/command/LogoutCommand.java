@@ -8,11 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Urban Aleksandr
+ * {@code LogoutCommand} implementation of interface {@code Command}
  */
 public class LogoutCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(LogoutCommand.class);
 
+    /**
+     * Remove user session, set locale bundle by request
+     *
+     * @param request
+     * @param response
+     * @return path to schedules page
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         log.info("Executing with session id {}", request.getSession().getId());

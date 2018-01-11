@@ -12,11 +12,21 @@ import static com.grubjack.cinema.util.ConfigManager.REGISTER_PAGE_PATH;
 import static com.grubjack.cinema.util.ConfigManager.ROLES_ATTR;
 
 /**
- * Created by Urban Aleksandr
+ * {@code AddUserCommand} implementation of interface {@code Command}
  */
 public class AddUserCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(AddUserCommand.class);
 
+    /**
+     * Save in session names of user roles
+     *
+     * @param request
+     * @param response
+     * @return path to register user jsp page
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         log.info("Executing with session id {}", request.getSession().getId());

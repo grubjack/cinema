@@ -13,11 +13,23 @@ import static com.grubjack.cinema.service.ServiceFactory.getInstance;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code CheckLoginCommand} implementation of interface {@code Command}
  */
 public class CheckLoginCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(CheckLoginCommand.class);
 
+    /**
+     * Get entered user email and password from request and check it
+     * If credentials is invalid add error message to session
+     *
+     * @param request
+     * @param response
+     * @return forward to previous page using fromPage parameter or error page
+     * @throws DaoException exception for dao operations
+     */
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());
         String login = request.getParameter(LOGIN_PARAM);

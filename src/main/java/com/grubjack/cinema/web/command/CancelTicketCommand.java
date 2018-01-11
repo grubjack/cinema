@@ -11,11 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 import static com.grubjack.cinema.util.ConfigManager.TICKET_ID_PARAM;
 
 /**
- * Created by Urban Aleksandr
+ * {@code CancelTicketCommand} implementation of interface {@code Command}
  */
 public class CancelTicketCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(DeleteUserCommand.class);
 
+    /**
+     * Get ticket id from request and release ticket with this id
+     *
+     * @param request
+     * @param response
+     * @return path to tickets page
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());

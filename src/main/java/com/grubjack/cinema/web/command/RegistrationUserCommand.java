@@ -15,11 +15,25 @@ import javax.servlet.http.HttpServletResponse;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code RegistrationUserCommand} implementation of interface {@code Command}
  */
 public class RegistrationUserCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(RegistrationUserCommand.class);
 
+    /**
+     * Get user parameters and save them in session
+     * User password converts to MD5 hash
+     * <p>
+     * Add new user with selected roles
+     *
+     * @param request
+     * @param response
+     * @return forward to previous page using fromPage parameter or login page
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());

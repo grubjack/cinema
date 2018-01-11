@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Urban Aleksandr
+ * {@code Command} pattern Command interface
  */
 public interface Command {
     String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException;

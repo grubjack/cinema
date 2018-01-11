@@ -12,11 +12,28 @@ import javax.servlet.http.HttpServletResponse;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code ShowHallCommand} implementation of interface {@code Command}
  */
 public class ShowHallCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(ShowHallCommand.class);
 
+    /**
+     * Get show id parameter from request and save it into session
+     * Set attributes to session:
+     * - tickets of show
+     * - numbers of rows
+     * - numbers of seats
+     * - ticketService from find place by row and seat
+     * - attendace of hall in percentage
+     *
+     * @param request
+     * @param response
+     * @return path to hall page
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());

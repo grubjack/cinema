@@ -10,9 +10,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.grubjack.cinema.util.ConfigManager.USER_ID_PARAM;
 
+/**
+ * {@code DeleteUserCommand} implementation of interface {@code Command}
+ */
 public class DeleteUserCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(DeleteUserCommand.class);
 
+    /**
+     * Get user id from request and delete user by this id
+     *
+     * @param request
+     * @param response
+     * @return path to users page
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());

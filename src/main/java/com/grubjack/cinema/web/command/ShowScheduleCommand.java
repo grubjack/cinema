@@ -13,11 +13,24 @@ import javax.servlet.http.HttpServletResponse;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code ShowScheduleCommand} implementation of interface {@code Command}
  */
 public class ShowScheduleCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(ShowScheduleCommand.class);
 
+    /**
+     * Set to sessions attribute:
+     * - all names day of week
+     * - all names time of day
+     * - showService for find show with day and time
+     *
+     * @param request
+     * @param response
+     * @return path to schedules page
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         log.info("Executing with session id {}", request.getSession().getId());

@@ -13,11 +13,23 @@ import static com.grubjack.cinema.util.ConfigManager.LOGGED_USER_ATTR;
 import static com.grubjack.cinema.util.ConfigManager.TICKET_ID_PARAM;
 
 /**
- * Created by Urban Aleksandr
+ * {@code BuyTicketCommand} implementation of interface {@code Command}
  */
 public class BuyTicketCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(BuyTicketCommand.class);
 
+    /**
+     * Get ticket id and logged user from request
+     * Add ticket to users tickets
+     *
+     * @param request
+     * @param response
+     * @return path to schedules page
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());

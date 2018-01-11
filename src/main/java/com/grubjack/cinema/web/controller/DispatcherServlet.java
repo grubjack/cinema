@@ -16,9 +16,13 @@ import java.io.IOException;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code DispatcherServlet} single application http servlet
+ * Using for routing client requests
  */
 public class DispatcherServlet extends HttpServlet {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(DispatcherServlet.class);
 
     @Override
@@ -31,6 +35,16 @@ public class DispatcherServlet extends HttpServlet {
         processRequest(request, response);
     }
 
+    /**
+     * Process client requests
+     * Determinate instance of {@code Command}} , execute it and forwart to related page
+     * All exceptions write to log, error message set as attribute of request
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LocaleResourceBundle.setFor(request);
         String page;

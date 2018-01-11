@@ -11,11 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 import static com.grubjack.cinema.util.ConfigManager.SHOW_ID_PARAM;
 
 /**
- * Created by Urban Aleksandr
+ * {@code CancelMovieCommand} implementation of interface {@code Command}
  */
 public class CancelMovieCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(CancelMovieCommand.class);
 
+    /**
+     * Get show id from request and delete show by this id
+     *
+     * @param request
+     * @param response
+     * @return path to schedules page
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());

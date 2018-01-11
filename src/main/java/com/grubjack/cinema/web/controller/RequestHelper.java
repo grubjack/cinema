@@ -9,11 +9,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Urban Aleksandr
+ * {@code RequestHelper} utility class
+ * <p>
+ * Store map with instances of commands value and key related string keys
  */
 public class RequestHelper {
     private static Logger log = LoggerFactory.getLogger(RequestHelper.class);
     private static RequestHelper instance = null;
+    /**
+     * Store map with instances of commands value and key related string keys
+     */
     private Map<String, Command> commands = new HashMap<>();
 
     private RequestHelper() {
@@ -34,6 +39,12 @@ public class RequestHelper {
         commands.put("cancelTicket", new CancelTicketCommand());
     }
 
+    /**
+     * Return instance of command corresponding to parameter command in client http request
+     *
+     * @param request http request
+     * @return command by request parameter
+     */
     public Command getCommand(HttpServletRequest request) {
         String action = request.getParameter("command");
         Command command = commands.get(action);

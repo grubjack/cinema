@@ -14,11 +14,25 @@ import javax.servlet.http.HttpServletResponse;
 import static com.grubjack.cinema.util.ConfigManager.*;
 
 /**
- * Created by Urban Aleksandr
+ * {@code CreateMovieCommand} implementation of interface {@code Command}
  */
 public class CreateMovieCommand implements Command {
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(CreateMovieCommand.class);
 
+    /**
+     * Get day,time and movie title parameters from request
+     * Save movie parameter in session
+     * <p>
+     * Create new movie show
+     *
+     * @param request
+     * @param response
+     * @return path to schedules page
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         String day = (String) request.getSession().getAttribute(DAY_PARAM);
