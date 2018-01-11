@@ -2,6 +2,7 @@ package com.grubjack.cinema.service;
 
 import com.grubjack.cinema.exception.DaoException;
 import com.grubjack.cinema.model.Ticket;
+import com.grubjack.cinema.to.TicketWithShow;
 
 import java.util.List;
 
@@ -10,12 +11,12 @@ import java.util.List;
  */
 public interface TicketService {
     /**
-     * Find all user tickets
+     * Find all user tickets with show
      *
-     * @return List of tickets corresponding to user with id {@param userId}
+     * @return List of tickets with show corresponding to user with id {@param userId}
      * @throws DaoException exception for dao operations
      */
-    List<Ticket> findByUser(int userId) throws DaoException;
+    List<TicketWithShow> findByUser(int userId) throws DaoException;
 
     /**
      * Find all movie show tickets

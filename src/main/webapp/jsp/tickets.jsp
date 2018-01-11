@@ -19,13 +19,11 @@
     </thead>
     <tbody>
     <c:forEach var="ticket" items="${tickets}">
-        <c:set value="${showService.findByTicket(ticket.id)}" var="show"/>
-        <jsp:useBean id="ticket" class="com.grubjack.cinema.model.Ticket"/>
-        <jsp:useBean id="show" class="com.grubjack.cinema.model.Show"/>
+        <jsp:useBean id="ticket" type="com.grubjack.cinema.to.TicketWithShow"/>
         <tr>
-            <td>${lang['day.'.concat(myfn:toLowerCase(show.dayOfWeek))]}</td>
-            <td>${show.timeOfDay.toString()}</td>
-            <td>${show.movie}</td>
+            <td>${lang['day.'.concat(myfn:toLowerCase(ticket.dayOfWeek))]}</td>
+            <td>${ticket.timeOfDay.toString()}</td>
+            <td>${ticket.movie}</td>
             <td>${ticket.row}</td>
             <td>${ticket.seat}</td>
             <td>${ticket.price}</td>

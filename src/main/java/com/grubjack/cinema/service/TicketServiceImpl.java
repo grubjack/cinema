@@ -1,11 +1,15 @@
 package com.grubjack.cinema.service;
 
+import com.grubjack.cinema.dao.ShowDao;
 import com.grubjack.cinema.dao.TicketDao;
 import com.grubjack.cinema.exception.DaoException;
+import com.grubjack.cinema.model.Show;
 import com.grubjack.cinema.model.Ticket;
+import com.grubjack.cinema.to.TicketWithShow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,20 +32,32 @@ public class TicketServiceImpl implements TicketService {
      */
     private TicketDao ticketDao;
 
-    public TicketServiceImpl(TicketDao ticketDao) {
+    /**
+     * interface {@code ShowDao} for jdbc operations with entity {@code Show}
+     */
+    private ShowDao showDao;
+
+    public TicketServiceImpl(TicketDao ticketDao, ShowDao showDao) {
         this.ticketDao = ticketDao;
+        this.showDao = showDao;
     }
 
     /**
-     * Find all user tickets
+     * Find all user tickets with show
      *
-     * @return List of tickets corresponding to user with id {@param userId}
+     * @return List of tickets with show corresponding to user with id {@param userId}
      * @throws DaoException exception for dao operations
      */
     @Override
-    public List<Ticket> findByUser(int userId) throws DaoException {
+    public List<TicketWithShow> findByUser(int userId) throws DaoException {
         log.info("Get tickets of user with id {}", userId);
-        return ticketDao.findByUser(userId);
+        List<TicketWithShow> ticketWithShows = new ArrayList<>();
+        for (Ticket ticket : ticketDao.findByUser(userId)) {
+            log.info("Get show of ticket with id {}", ticket.getId());
+            Show show = showDao.findByTicket(ticket.getId());
+            ticketWithShows.add(new TicketWithShow(ticket.getId(), ticket.getRow(), ticket.getSeat(), ticket.getPrice(), show.getDayOfWeek(), show.getTimeOfDay(), show.getMovie()));
+        }
+        return ticketWithShows;
     }
 
     /**

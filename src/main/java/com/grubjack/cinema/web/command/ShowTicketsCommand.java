@@ -1,6 +1,7 @@
 package com.grubjack.cinema.web.command;
 
 import com.grubjack.cinema.exception.DaoException;
+import com.grubjack.cinema.model.Ticket;
 import com.grubjack.cinema.model.User;
 import com.grubjack.cinema.service.ServiceFactory;
 import com.grubjack.cinema.util.ConfigManager;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.List;
 
 import static com.grubjack.cinema.util.ConfigManager.*;
 
@@ -38,7 +41,6 @@ public class ShowTicketsCommand implements Command {
         if (user != null) {
             log.info("Show tickets for user with id " + user.getId());
             request.getSession().setAttribute(TICKETS_ATTR, ServiceFactory.getInstance().getTicketService().findByUser(user.getId()));
-            request.getSession().setAttribute(SHOW_SERVICE_ATTR, ServiceFactory.getInstance().getShowService());
         }
         return ConfigManager.getInstance().getProperty(TICKETS_PAGE_PATH);
     }

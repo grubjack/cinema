@@ -38,12 +38,12 @@ public class ServiceFactory {
     }
 
     /**
-     * Return implementation of {@code TicketService} interface passing it related dao implementation
+     * Return implementation of {@code TicketService} interface which use implementation of {@code TicketDao} and {@code ShowDao} interfaces
      *
      * @return interface implementation
      */
     public TicketService getTicketService() {
-        return new TicketServiceImpl(DaoFactory.getInstance().getTicketDao());
+        return new TicketServiceImpl(DaoFactory.getInstance().getTicketDao(), DaoFactory.getInstance().getShowDao());
     }
 
     /**
