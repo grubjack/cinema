@@ -1,5 +1,8 @@
 package com.grubjack.cinema.exception;
 
+/**
+ * {@code DaoException} exception for dao operations
+ */
 public class DaoException extends Exception {
 
     public DaoException() {

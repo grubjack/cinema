@@ -15,29 +15,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Urban Aleksandr
+ * {@code ShowDaoImpl} implementation of interface {@code ShowDao} for jdbc operations with entity {@code Show}
  */
 public class ShowDaoImpl implements ShowDao {
 
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(ShowDaoImpl.class);
+    /**
+     * SQL query for add movie show records on some day and time into database
+     */
     private static final String CREATE_SHOW_SQL = "INSERT INTO shows (day, time, movie) VALUES (?,?,?)";
+    /**
+     * SQL query for save add ticket records with row,seat,price and related show id into database
+     */
     private static final String CREATE_TICKET_SQL = "INSERT INTO tickets (row, seat, price, show_id) VALUES (?,?,?,?)";
+    /**
+     * SQL query for update movie show records on some day and time by id in database
+     */
     private static final String UPDATE_SHOW_SQL = "UPDATE shows SET day=?, time=?, movie=? WHERE id=?";
+    /**
+     * SQL query for delete movie show by id from database
+     */
     private static final String DELETE_SHOW_SQL = "DELETE FROM shows WHERE id=?";
+    /**
+     * SQL query for retrieve show by id from database
+     */
     private static final String FIND_SHOW_SQL = "SELECT * FROM shows WHERE id=?";
+    /**
+     * SQL query for retrieve all shows from database sorted by day and time
+     */
     private static final String FIND_ALL_SHOW_SQL = "SELECT * FROM shows ORDER BY day,time";
+    /**
+     * SQL query for retrieve all shows from database by day
+     */
     private static final String FIND_SHOW_BY_DATE = "SELECT * FROM shows WHERE day=?";
+    /**
+     * SQL query for retrieve all shows from database by time
+     */
     private static final String FIND_SHOW_BY_TIME = "SELECT * FROM shows WHERE time=?";
+    /**
+     * SQL query for retrieve all shows from database by day and time
+     */
     private static final String FIND_SHOW_BY_DATE_TIME = "SELECT * FROM shows WHERE day=? AND time=?";
+    /**
+     * SQL query for retrieve all shows from database by movie
+     */
     private static final String FIND_SHOW_BY_MOVIE = "SELECT * FROM shows WHERE UPPER(movie) LIKE UPPER(?)";
+    /**
+     * SQL query for retrieve show from database by ticket id
+     */
     private static final String FIND_SHOW_BY_TICKET = "SELECT s.id AS id, s.day,s.time,s.movie,t.id AS tid FROM shows s INNER JOIN tickets t ON s.id = t.show_id WHERE t.id=?";
 
+    /**
+     * Data Source for access to database
+     */
     private DataSource dataSource;
 
     public ShowDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Save entity show and related tickets into database
+     *
+     * @param show instance of entity {@code Show}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void create(Show show) throws DaoException {
         log.info("Creating new show");
@@ -102,6 +147,12 @@ public class ShowDaoImpl implements ShowDao {
         }
     }
 
+    /**
+     * Update entity show in database
+     *
+     * @param show instance of entity {@code Show}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void update(Show show) throws DaoException {
         log.info("Updating show with id " + show.getId());
@@ -136,6 +187,12 @@ public class ShowDaoImpl implements ShowDao {
         }
     }
 
+    /**
+     * Delete database record for show by id
+     *
+     * @param id integer id of show instance
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void delete(int id) throws DaoException {
         log.info("Deleting show with id " + id);
@@ -167,6 +224,13 @@ public class ShowDaoImpl implements ShowDao {
         }
     }
 
+    /**
+     * Find show entity by id
+     *
+     * @param id integer id of show instance
+     * @return found show entity
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public Show find(int id) throws DaoException {
         log.info("Finding show with id {}", id);
@@ -215,6 +279,12 @@ public class ShowDaoImpl implements ShowDao {
         return show;
     }
 
+    /**
+     * Find all show entity
+     *
+     * @return List of all show entities
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Show> findAll() throws DaoException {
         log.info("Finding all shows");
@@ -263,6 +333,12 @@ public class ShowDaoImpl implements ShowDao {
         return result;
     }
 
+    /**
+     * List of movie shows by day of week
+     *
+     * @return List of {@code Show} corresponding to {@param dayOfWeek}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Show> findByDay(DayOfWeek dayOfWeek) throws DaoException {
         log.info("Finding shows by day " + dayOfWeek);
@@ -312,6 +388,12 @@ public class ShowDaoImpl implements ShowDao {
         return result;
     }
 
+    /**
+     * List of movie shows by time of movie show
+     *
+     * @return List of {@code Show} corresponding to {@param timeOfDay}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Show> findByTime(TimeOfDay timeOfDay) throws DaoException {
         log.info("Finding shows by time " + timeOfDay);
@@ -361,6 +443,12 @@ public class ShowDaoImpl implements ShowDao {
         return result;
     }
 
+    /**
+     * Find show by ticket
+     *
+     * @return Instance of class {@code Show} corresponding to {@param ticketId}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public Show findByDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) throws DaoException {
         log.info("Finding shows by day {} and time {} ", dayOfWeek, timeOfDay);
@@ -410,6 +498,12 @@ public class ShowDaoImpl implements ShowDao {
         return show;
     }
 
+    /**
+     * Find show by day of week and time of movie show
+     *
+     * @return Instance of class {@code Show} corresponding to {@param dayOfWeek} and {@param timeOfDay}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Show> findByMovie(String movie) throws DaoException {
         log.info("Finding shows by '{}'" + movie);
@@ -459,10 +553,15 @@ public class ShowDaoImpl implements ShowDao {
         return result;
     }
 
+    /**
+     * List of movie shows by some movie
+     *
+     * @return List of {@code Show} corresponding to movie {@param movie}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public Show findByTicket(int ticketId) throws DaoException {
         log.info("Finding shows by ticket with id {}" + ticketId);
-
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;

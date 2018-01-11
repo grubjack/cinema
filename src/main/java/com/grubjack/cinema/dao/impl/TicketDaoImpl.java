@@ -12,27 +12,67 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Urban Aleksandr
+ * {@code TicketDaoImpl} implementation of interface {@code TicketDao} for jdbc operations with entity {@code Ticket}
  */
 public class TicketDaoImpl implements TicketDao {
 
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(TicketDaoImpl.class);
+    /**
+     * SQL query for add ticket records with row,seat,price,sold status and related show id into database
+     */
     private static final String CREATE_SHOW_TICKET_SQL = "INSERT INTO tickets (row, seat, price, sold, show_id) VALUES (?,?,?,?,?)";
+    /**
+     * SQL query for update ticket records with row,seat,price and related show id by id into database
+     */
     private static final String UPDATE_SHOW_TICKET_SQL = "UPDATE tickets SET row=?, seat=?, price=?, sold=?, show_id=? WHERE id=?";
+    /**
+     * SQL query for delete ticket by id from database
+     */
     private static final String UPDATE_TICKET_SQL = "DELETE FROM tickets WHERE id=?";
+    /**
+     * SQL query for retrieve ticket by id from database
+     */
     private static final String FIND_TICKET_SQL = "SELECT * FROM tickets WHERE id=?";
+    /**
+     * SQL query for retrieve all tickets from database
+     */
     private static final String FIND_ALL_TICKET_SQL = "SELECT * FROM tickets";
+    /**
+     * SQL query for retrieve all user tickets from database by user id
+     */
     private static final String FIND_USER_TICKET_SQL = "SELECT * FROM tickets WHERE user_id=?";
+    /**
+     * SQL query for retrieve all show tickets from database by show id
+     */
     private static final String FIND_SHOW_TICKET_SQL = "SELECT * FROM tickets WHERE show_id=?";
+    /**
+     * SQL query for retrieve all user tickets from database by sold state
+     */
     private static final String FIND_TICKET_BY_STATE_SQL = "SELECT * FROM tickets WHERE sold=?";
+    /**
+     * SQL query for update ticket state and user id by id into database
+     */
     private static final String UPDATE_USER_TICKET_SQL = "UPDATE tickets SET sold=?,user_id=? WHERE id=?";
 
+    /**
+     * Data Source for access to database
+     */
     private DataSource dataSource;
 
     public TicketDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Save entity ticket into database
+     *
+     * @param ticket instance of entity {@code Ticket}
+     * @param showId related show id of ticket
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void create(Ticket ticket, int showId) throws DaoException {
         log.info("Creating new ticket");
@@ -81,6 +121,13 @@ public class TicketDaoImpl implements TicketDao {
         }
     }
 
+    /**
+     * Update entity ticket into database
+     *
+     * @param ticket instance of entity {@code Ticket}
+     * @param showId related show id of ticket
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void update(Ticket ticket, int showId) throws DaoException {
         log.info("Updating ticket with id {}", ticket.getId());
@@ -117,6 +164,12 @@ public class TicketDaoImpl implements TicketDao {
         }
     }
 
+    /**
+     * Delete database record for ticket by id
+     *
+     * @param id integer id of ticket instance
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void delete(int id) throws DaoException {
         log.info("Deleting ticket with id {}", id);
@@ -149,6 +202,13 @@ public class TicketDaoImpl implements TicketDao {
         }
     }
 
+    /**
+     * Find ticket entity by id
+     *
+     * @param id integer id of ticket instance
+     * @return found ticket entity
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public Ticket find(int id) throws DaoException {
         log.info("Finding ticket with id {}", id);
@@ -198,6 +258,12 @@ public class TicketDaoImpl implements TicketDao {
         return ticket;
     }
 
+    /**
+     * Find all ticket entity
+     *
+     * @return List of all ticket entities
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Ticket> findAll() throws DaoException {
         log.info("Finding all tickets");
@@ -247,6 +313,12 @@ public class TicketDaoImpl implements TicketDao {
         return result;
     }
 
+    /**
+     * Find all user tickets
+     *
+     * @return List of tickets corresponding to user with id {@param userId}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Ticket> findByUser(int userId) throws DaoException {
         log.info("Finding all tickets by user with id {}", userId);
@@ -297,6 +369,12 @@ public class TicketDaoImpl implements TicketDao {
         return result;
     }
 
+    /**
+     * Find all movie show tickets
+     *
+     * @return List of tickets corresponding to show with id {@param showId}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Ticket> findByShow(int showId) throws DaoException {
         log.info("Finding all tickets by show with id {}", showId);
@@ -347,6 +425,12 @@ public class TicketDaoImpl implements TicketDao {
         return result;
     }
 
+    /**
+     * Find all tickets by its sold status
+     *
+     * @return List of tickets corresponding to sold status {@param sold}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<Ticket> findByState(boolean sold) throws DaoException {
         log.info("Finding all available tickets");
@@ -397,6 +481,13 @@ public class TicketDaoImpl implements TicketDao {
         return result;
     }
 
+    /**
+     * Change status of user ticket to sold
+     *
+     * @param id     ticket id
+     * @param userId user id
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void buyTicket(int id, int userId) throws DaoException {
         log.info("Buy ticket with id {} by user with id", id, userId);

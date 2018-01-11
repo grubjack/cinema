@@ -13,26 +13,63 @@ import java.util.*;
 
 
 /**
- * Created by Urban Aleksandr
+ * {@code UserDaoImpl} implementation of interface {@code UserDao} for jdbc operations with entity {@code User}
  */
 public class UserDaoImpl implements UserDao {
 
+    /**
+     * Class logger
+     */
     private static Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
+    /**
+     * SQL query for add user records with firstname, lastname, email, password into database
+     * User password is stored in encrypted MD5 form in database
+     */
     private static final String CREATE_USER_SQL = "INSERT INTO users (firstname, lastname, email, password) VALUES (?,?,?,?)";
+    /**
+     * SQL query for add user roles records with role and user id into database
+     */
     private static final String CREATE_USER_ROLES_SQL = "INSERT INTO user_roles (role,user_id) VALUES (?,?)";
+    /**
+     * SQL query for update user records with firstname, lastname, email, password into database
+     */
     private static final String UPDATE_USER_SQL = "UPDATE users SET firstname=?,lastname=?,email=?,password=? WHERE id=?";
+    /**
+     * SQL query for update user ticket records with sold state and user id into database
+     */
     private static final String UPDATE_USER_TICKETS_SQL = "UPDATE tickets SET sold=?,user_id=? WHERE user_id=?";
+    /**
+     * SQL query for delete user by id from database
+     */
     private static final String DELETE_USER_SQL = "DELETE FROM users WHERE id=?";
+    /**
+     * SQL query for retrieve users by id from database
+     */
     private static final String FIND_USER_SQL = "SELECT * FROM users WHERE id=?";
+    /**
+     * SQL query for retrieve all users with roles from database sorted by user firstname and lastname
+     */
     private static final String FIND_ALL_USER_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id ORDER BY users.firstname,users.lastname";
+    /**
+     * SQL query for retrieve user with roles from database by user email
+     */
     private static final String FIND_USER_BY_EMAIL_SQL = "SELECT * FROM users LEFT JOIN user_roles ON users.id=user_roles.user_id WHERE LOWER(email) LIKE LOWER(?)";
 
+    /**
+     * Data Source for access to database
+     */
     private DataSource dataSource;
 
     public UserDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Save entity user and user roles into database
+     *
+     * @param user instance of entity {@code User}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void create(User user) throws DaoException {
         log.info("Creating new user");
@@ -99,6 +136,12 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    /**
+     * Update entity user in database
+     *
+     * @param user instance of entity {@code User}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void update(User user) throws DaoException {
         log.info("Updating user with id " + user.getId());
@@ -134,6 +177,12 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    /**
+     * Delete database record for user and user roles by user id
+     *
+     * @param id integer id of user instance
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public void delete(int id) throws DaoException {
         log.info("Deleting user with id " + id);
@@ -177,6 +226,13 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    /**
+     * Find user entity by id
+     *
+     * @param id integer id of user instance
+     * @return found user entity
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public User find(int id) throws DaoException {
         log.info("Finding user with id " + id);
@@ -226,6 +282,12 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    /**
+     * Find all user entity
+     *
+     * @return List of all user entities
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public List<User> findAll() throws DaoException {
         log.info("Finding all users with roles");
@@ -283,6 +345,12 @@ public class UserDaoImpl implements UserDao {
         return new ArrayList<>(userById.values());
     }
 
+    /**
+     * Find user by its email
+     *
+     * @return Instance of class {@code User} corresponding to {@param email}
+     * @throws DaoException exception for dao operations
+     */
     @Override
     public User getByEmail(String email) throws DaoException {
         log.info("Finding user with email " + email);
