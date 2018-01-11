@@ -444,9 +444,9 @@ public class ShowDaoImpl implements ShowDao {
     }
 
     /**
-     * Find show by ticket
+     * Find show by day of week and time
      *
-     * @return Instance of class {@code Show} corresponding to {@param ticketId}
+     * @return Instance of class {@code Show} corresponding to {@param dayOfWeek} and {@param timeOfDay}
      * @throws DaoException exception for dao operations
      */
     @Override

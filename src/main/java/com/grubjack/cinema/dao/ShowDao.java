@@ -30,7 +30,7 @@ public interface ShowDao extends BaseDao<Show> {
     List<Show> findByTime(TimeOfDay timeOfDay) throws DaoException;
 
     /**
-     * Find show by day of week and time of movie show
+     * Find show by day of week and time
      *
      * @return Instance of class {@code Show} corresponding to {@param dayOfWeek} and {@param timeOfDay}
      * @throws DaoException exception for dao operations
