@@ -8,13 +8,13 @@
 <table border="2px" cellpadding="1" cellspacing="1">
     <thead>
     <tr>
-        <th width="10%">${lang['show.day']}</th>
-        <th width="10%">${lang['show.time']}</th>
-        <th width="10%">${lang['show.movie']}</th>
+        <th width="15%">${lang['show.day']}</th>
+        <th width="15%">${lang['show.time']}</th>
+        <th width="15%">${lang['show.movie']}</th>
         <th width="10%">${lang['ticket.row']}</th>
         <th width="10%">${lang['ticket.seat']}</th>
         <th width="10%">${lang['ticket.price']}</th>
-        <th width="20%">${lang['app.action']}</th>
+        <th width="10">${lang['app.action']}</th>
     </tr>
     </thead>
     <tbody>
