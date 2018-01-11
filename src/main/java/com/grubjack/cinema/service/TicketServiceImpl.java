@@ -44,6 +44,12 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public void cancel(int id) throws DaoException {
+        log.info("Cancel ticket with id {}", id);
+        ticketDao.cancel(id);
+    }
+
+    @Override
     public void buyTicket(int id, int userId) throws DaoException {
         log.info("Buy ticket with id {} by user with id {}", id, userId);
         ticketDao.buyTicket(id, userId);

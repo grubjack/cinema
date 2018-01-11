@@ -16,4 +16,6 @@ public interface TicketService {
     void buyTicket(int id, int userId) throws DaoException;
 
     Ticket findByPlace(String showId, int row, int seat) throws DaoException;
+
+    void cancel(int id) throws DaoException;
 }

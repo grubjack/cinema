@@ -520,4 +520,44 @@ public class TicketDaoImpl implements TicketDao {
             }
         }
     }
+
+    /**
+     * Cancel ticket by id
+     * Ticket becomes available to buy again
+     *
+     * @param id ticket id
+     * @throws DaoException exception for dao operations
+     */
+    @Override
+    public void cancel(int id) throws DaoException {
+        log.info("Cancel ticket with id {}", id);
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(UPDATE_USER_TICKET_SQL);
+            statement.setBoolean(1, false);
+            statement.setNull(2, java.sql.Types.INTEGER);
+            statement.setInt(3, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Can't update ticket", e);
+            throw new DaoException("Can't update ticket", e);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    log.error("Can't close statement", e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    log.error("Can't close connection", e);
+                }
+            }
+        }
+    }
 }

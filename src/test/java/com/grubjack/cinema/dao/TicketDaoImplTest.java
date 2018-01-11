@@ -86,4 +86,11 @@ public class TicketDaoImplTest {
         ticketDao.buyTicket(1, 1);
         Assert.assertEquals(1, ticketDao.findByState(true).size());
     }
+
+    @Test
+    public void cancel() throws DaoException {
+        ticketDao.buyTicket(1, 1);
+        ticketDao.cancel(1);
+        Assert.assertEquals(0, ticketDao.findByState(true).size());
+    }
 }

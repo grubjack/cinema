@@ -14,6 +14,7 @@
         <th width="10%">${lang['ticket.row']}</th>
         <th width="10%">${lang['ticket.seat']}</th>
         <th width="10%">${lang['ticket.price']}</th>
+        <th width="20%">${lang['app.action']}</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,13 @@
             <td>${ticket.row}</td>
             <td>${ticket.seat}</td>
             <td>${ticket.price}</td>
+            <td>
+                <form method="post" action="${pageContext.request.contextPath}/">
+                    <input type="hidden" name="command" value="cancelTicket">
+                    <input type="hidden" name="ticketId" value=${ticket.id}>
+                    <input id="delete" type="submit" value=${lang['entity.cancel']}>
+                </form>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

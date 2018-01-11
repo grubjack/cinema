@@ -86,4 +86,13 @@ public interface TicketDao {
      * @throws DaoException exception for dao operations
      */
     void buyTicket(int id, int userId) throws DaoException;
+
+    /**
+     * Cancel ticket by id
+     * Ticket becomes available to buy again
+     *
+     * @param id ticket id
+     * @throws DaoException exception for dao operations
+     */
+    void cancel(int id) throws DaoException;
 }
