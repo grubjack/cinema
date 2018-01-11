@@ -78,7 +78,7 @@ public class ShowServiceImpl implements ShowService {
     public int getAttendance(int showId) throws DaoException {
         log.info("Compute attendance for show with id {}", showId);
         List<Ticket> showTickets = ticketDao.findByShow(showId);
-        return (int) (showTickets.stream().filter(Ticket::isSold).count() * 100 / showTickets.size());
+        return showTickets.size() > 0 ? (int) (showTickets.stream().filter(Ticket::isSold).count() * 100 / showTickets.size()) : 0;
     }
 
     private int computeCost(TimeOfDay timeOfDay) {
