@@ -1,5 +1,7 @@
 package com.grubjack.cinema.util;
 
+import com.grubjack.cinema.model.DayOfWeek;
+
 /**
  * {@code ConfigManager} utility class
  * <p>
@@ -8,12 +10,12 @@ package com.grubjack.cinema.util;
 public class Functions {
 
     /**
-     * Converts all of the characters in this {@code String} to lower case
+     * Converts all of the characters of input object to lower case
      *
-     * @param string input string
-     * @return input string in lower case
+     * @param dayOfWeek input day of week
+     * @return input dayOfWeek in lower case string
      */
-    public static String toLowerCase(String string) {
-        return string.toLowerCase();
+    public static String toLowerCase(DayOfWeek dayOfWeek) {
+        return dayOfWeek.name().toLowerCase();
     }
 }

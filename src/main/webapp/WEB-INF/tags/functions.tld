@@ -11,7 +11,7 @@
     <function>
         <name>toLowerCase</name>
         <function-class>com.grubjack.cinema.util.Functions</function-class>
-        <function-signature>java.lang.String toLowerCase(java.lang.String)</function-signature>
+        <function-signature>java.lang.String toLowerCase(com.grubjack.cinema.model.DayOfWeek)</function-signature>
     </function>
 
 </taglib>
