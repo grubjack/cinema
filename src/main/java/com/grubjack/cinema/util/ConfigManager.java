@@ -44,7 +44,7 @@ public class ConfigManager {
     public static final String ATTENDANCE_ATTR = "attendance";
     public static final String DAYS_ATTR = "days";
     public static final String TIMES_ATTR = "times";
-    public static final String SHOW_SERVICE_ATTR = "showService";
+    public static final String SCHEDULE_ATTR = "schedule";
     public static final String USERS_ATTR = "users";
     public static final String ERROR_MESSAGE_ATTR = "errorMessage";
 

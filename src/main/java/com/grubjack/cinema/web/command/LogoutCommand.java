@@ -1,5 +1,6 @@
 package com.grubjack.cinema.web.command;
 
+import com.grubjack.cinema.exception.DaoException;
 import com.grubjack.cinema.util.LocaleResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class LogoutCommand implements Command {
      * @return path to schedules page
      */
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());
         request.getSession().invalidate();
         LocaleResourceBundle.setFor(request);

@@ -1,5 +1,6 @@
 package com.grubjack.cinema.web.command;
 
+import com.grubjack.cinema.exception.DaoException;
 import com.grubjack.cinema.model.DayOfWeek;
 import com.grubjack.cinema.model.TimeOfDay;
 import com.grubjack.cinema.service.ServiceFactory;
@@ -32,11 +33,11 @@ public class ShowScheduleCommand implements Command {
      * @return path to schedules page
      */
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());
-        request.getSession().setAttribute(DAYS_ATTR, DayOfWeek.names());
-        request.getSession().setAttribute(TIMES_ATTR, TimeOfDay.names());
-        request.getSession().setAttribute(SHOW_SERVICE_ATTR, ServiceFactory.getInstance().getShowService());
+        request.getSession().setAttribute(DAYS_ATTR, DayOfWeek.values());
+        request.getSession().setAttribute(TIMES_ATTR, TimeOfDay.values());
+        request.setAttribute(SCHEDULE_ATTR, ServiceFactory.getInstance().getShowService().getSchedule());
         return ConfigManager.getInstance().getProperty(MAIN_PAGE_PATH);
     }
 }

@@ -1,9 +1,12 @@
 package com.grubjack.cinema.service;
 
 import com.grubjack.cinema.exception.DaoException;
+import com.grubjack.cinema.model.DayOfWeek;
 import com.grubjack.cinema.model.Show;
+import com.grubjack.cinema.model.TimeOfDay;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@code ShowService} interface for service working with logic of movies
@@ -44,10 +47,11 @@ public interface ShowService {
     int getAttendance(int showId) throws DaoException;
 
     /**
-     * Find show by day of week and time
+     * Build cinema schedule
+     * Find all shows grouping by day and time values
      *
-     * @return Instance of class {@code Show} corresponding to {@param dayOfWeek} and {@param timeOfDay}
+     * @return cinema schedule group by time and day of shows
      * @throws DaoException exception for dao operations
      */
-    Show findByDayAndTime(String day, String time) throws DaoException;
+    public Map<TimeOfDay, Map<DayOfWeek, Show>> getSchedule() throws DaoException;
 }

@@ -3,6 +3,7 @@ package com.grubjack.cinema.service;
 import com.grubjack.cinema.dao.ShowDao;
 import com.grubjack.cinema.dao.TicketDao;
 import com.grubjack.cinema.exception.DaoException;
+import com.grubjack.cinema.model.DayOfWeek;
 import com.grubjack.cinema.model.Show;
 import com.grubjack.cinema.model.Ticket;
 import com.grubjack.cinema.model.TimeOfDay;
@@ -11,6 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * {@code ShowServiceImpl} implementation of interface {@code ShowService} with login for entity {@code Show}
@@ -20,11 +26,6 @@ public class ShowServiceImpl implements ShowService {
      * Class logger
      */
     private static Logger log = LoggerFactory.getLogger(ShowServiceImpl.class);
-
-    /**
-     * Store all shows for preventing a lot of queries to database
-     */
-    private List<Show> shows;
 
     /**
      * interface {@code ShowDao} for jdbc operations with entity {@code Show}
@@ -53,19 +54,16 @@ public class ShowServiceImpl implements ShowService {
         return showDao.findAll();
     }
 
+    /**
+     * Build cinema schedule
+     * Find all shows grouping by day and time values
+     *
+     * @return cinema schedule group by time and day of shows
+     * @throws DaoException exception for dao operations
+     */
     @Override
-    public Show findByDayAndTime(String day, String time) throws DaoException {
-        if (shows == null) {
-            log.info("Get all show");
-            shows = showDao.findAll();
-        }
-        for (Show show : shows) {
-            if (show.getDayOfWeek().toString().equalsIgnoreCase(day) && show.getTimeOfDay().toString().equalsIgnoreCase(time)) {
-                log.info("Get show by day {} and time {}", day, time);
-                return show;
-            }
-        }
-        return null;
+    public Map<TimeOfDay, Map<DayOfWeek, Show>> getSchedule() throws DaoException {
+        return showDao.findAll().stream().collect(groupingBy(Show::getTimeOfDay, toMap(Show::getDayOfWeek, identity())));
     }
 
     /**
