@@ -30,13 +30,14 @@ table {
 }
 
 table th {
+    height: 80px;
+    width: 80px;
     padding: 21px 25px 22px 25px;
     color: white;
     background: #4B99AD;
 }
 
 table tr {
-    height: 80px;
     text-align: center;
     padding-left: 20px;
 }
