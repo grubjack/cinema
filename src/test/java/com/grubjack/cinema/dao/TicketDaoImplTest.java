@@ -26,7 +26,7 @@ public class TicketDaoImplTest {
     }
 
     @Test
-    public void create() throws DaoException {
+    public void testCreate() throws DaoException {
         Show show = new Show(DayOfWeek.SUNDAY, TimeOfDay.SIXTH, "New movie");
         showDao.create(show);
         Ticket ticket = new Ticket(1, 1, 1);
@@ -35,7 +35,7 @@ public class TicketDaoImplTest {
     }
 
     @Test
-    public void update() throws DaoException {
+    public void testUpdate() throws DaoException {
         Ticket ticket = ticketDao.find(1);
         if (ticket.isSold()) {
             ticket.setSold(false);
@@ -47,34 +47,34 @@ public class TicketDaoImplTest {
     }
 
     @Test
-    public void delete() throws DaoException {
+    public void testDelete() throws DaoException {
         ticketDao.delete(1);
         Assert.assertNull(ticketDao.find(1));
     }
 
     @Test
-    public void find() throws DaoException {
+    public void testFind() throws DaoException {
         Assert.assertNotNull(ticketDao.find(1));
     }
 
     @Test
-    public void findAll() throws DaoException {
+    public void testFindAll() throws DaoException {
         Assert.assertEquals(1120, ticketDao.findAll().size());
     }
 
     @Test
-    public void findByUser() throws DaoException {
+    public void testFindByUser() throws DaoException {
         ticketDao.buyTicket(1, 1);
         Assert.assertEquals(1, ticketDao.findByUser(1).size());
     }
 
     @Test
-    public void findByShow() throws DaoException {
+    public void testFindByShow() throws DaoException {
         Assert.assertEquals(28, ticketDao.findByShow(1).size());
     }
 
     @Test
-    public void findByState() throws DaoException {
+    public void testFindByState() throws DaoException {
         Ticket ticket = ticketDao.find(1);
         ticket.setSold(true);
         ticketDao.update(ticket, showDao.findByTicket(ticket.getId()).getId());
@@ -82,13 +82,13 @@ public class TicketDaoImplTest {
     }
 
     @Test
-    public void buyTicket() throws DaoException {
+    public void testBuyTicket() throws DaoException {
         ticketDao.buyTicket(1, 1);
         Assert.assertEquals(1, ticketDao.findByState(true).size());
     }
 
     @Test
-    public void cancel() throws DaoException {
+    public void testCancel() throws DaoException {
         ticketDao.buyTicket(1, 1);
         ticketDao.cancel(1);
         Assert.assertEquals(0, ticketDao.findByState(true).size());

@@ -25,14 +25,14 @@ public class ShowDaoImplTest {
     }
 
     @Test
-    public void create() throws DaoException {
+    public void testCreate() throws DaoException {
         Show newShow = new Show(DayOfWeek.SUNDAY, TimeOfDay.SIXTH, "New Show");
         showDao.create(newShow);
         Assert.assertEquals(newShow, showDao.findByDayAndTime(DayOfWeek.SUNDAY, TimeOfDay.SIXTH));
     }
 
     @Test
-    public void createTickets() throws DaoException {
+    public void testCreateTickets() throws DaoException {
         Show newShow = new Show(DayOfWeek.SUNDAY, TimeOfDay.SIXTH, "New Show");
         newShow.getTickets().add(new Ticket(1,1,1));
         newShow.getTickets().add(new Ticket(1,2,2));
@@ -42,7 +42,7 @@ public class ShowDaoImplTest {
     }
 
     @Test
-    public void update() throws DaoException {
+    public void testUpdate() throws DaoException {
         Show oldShow = showDao.find(1);
         oldShow.setMovie("New movie");
         showDao.update(oldShow);
@@ -50,49 +50,49 @@ public class ShowDaoImplTest {
     }
 
     @Test
-    public void delete() throws DaoException {
+    public void testDlete() throws DaoException {
         showDao.delete(1);
         Assert.assertNull(showDao.find(1));
     }
 
     @Test
-    public void find() throws DaoException {
+    public void testFind() throws DaoException {
         Show show = showDao.find(1);
         Assert.assertNotNull(show);
     }
 
     @Test
-    public void findAll() throws DaoException {
+    public void testFindAll() throws DaoException {
         List<Show> showList = showDao.findAll();
         Assert.assertEquals(40, showList.size());
     }
 
     @Test
-    public void findByDay() throws DaoException {
+    public void testFindByDay() throws DaoException {
         List<Show> dayShows = showDao.findByDay(DayOfWeek.MONDAY);
         Assert.assertEquals(6, dayShows.size());
     }
 
     @Test
-    public void findByTime() throws DaoException {
+    public void testFindByTime() throws DaoException {
         List<Show> timeShows = showDao.findByTime(TimeOfDay.FIRST);
         Assert.assertEquals(7, timeShows.size());
     }
 
     @Test
-    public void findByDayAndTime() throws DaoException {
+    public void testFindByDayAndTime() throws DaoException {
         Show show = showDao.findByDayAndTime(DayOfWeek.MONDAY, TimeOfDay.FIRST);
         Assert.assertNotNull(show);
     }
 
     @Test
-    public void findByMovie() throws DaoException {
+    public void testFindByMovie() throws DaoException {
         List<Show> movieShows = showDao.findByMovie("Her");
         Assert.assertEquals(5, movieShows.size());
     }
 
     @Test
-    public void findByTicket() throws DaoException {
+    public void testFindByTicket() throws DaoException {
         Show showByTicket = showDao.findByTicket(1);
         Assert.assertNotNull(showByTicket);
 

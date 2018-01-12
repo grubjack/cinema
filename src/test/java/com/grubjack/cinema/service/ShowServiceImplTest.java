@@ -14,6 +14,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Map;
+
 public class ShowServiceImplTest {
 
     private ShowDao showDao = new ShowDaoImpl(DBHelper.getDataSource());
@@ -26,26 +29,38 @@ public class ShowServiceImplTest {
     }
 
     @Test
-    public void create() throws DaoException {
+    public void testCreate() throws DaoException {
         Show show = new Show(DayOfWeek.SUNDAY, TimeOfDay.SIXTH, "Test movie");
         showService.create(show);
         Assert.assertEquals(28, ticketDao.findByShow(show.getId()).size());
     }
 
     @Test
-    public void getAttendance() throws DaoException {
+    public void testAttendance() throws DaoException {
         Show show = new Show(DayOfWeek.SUNDAY, TimeOfDay.SIXTH, "Test movie");
         showService.create(show);
         Assert.assertEquals(0, showService.getAttendance(show.getId()));
     }
 
     @Test
-    public void getAttendanceFull() throws DaoException {
+    public void testAttendanceFull() throws DaoException {
         Show show = new Show(DayOfWeek.SUNDAY, TimeOfDay.SIXTH, "Test movie");
         showService.create(show);
         for (Ticket ticket : ticketDao.findByShow(show.getId())) {
             ticketDao.buyTicket(ticket.getId(), 1);
         }
         Assert.assertEquals(100, showService.getAttendance(show.getId()));
+    }
+
+    @Test
+    public void testScheduleContainsAllTimes() throws DaoException {
+        Map<TimeOfDay, Map<DayOfWeek, Show>> schedule = showService.getSchedule();
+        Assert.assertTrue(schedule.keySet().containsAll(Arrays.asList(TimeOfDay.values())));
+    }
+
+    @Test
+    public void testScheduleContainsAllDay() throws DaoException {
+        Map<TimeOfDay, Map<DayOfWeek, Show>> schedule = showService.getSchedule();
+        Assert.assertTrue(schedule.get(TimeOfDay.FIRST).keySet().containsAll(Arrays.asList(DayOfWeek.values())));
     }
 }

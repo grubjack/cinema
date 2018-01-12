@@ -22,16 +22,13 @@ public class UserDaoImplTest {
         DBHelper.setUpDatabase();
     }
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Test
-    public void findAll() throws DaoException {
+    public void testFindAll() throws DaoException {
         Assert.assertEquals(12, userDao.findAll().size());
     }
 
     @Test
-    public void update() throws DaoException {
+    public void testUpdate() throws DaoException {
         userDao.create(testUser);
         User user = userDao.getByEmail(testUser.getEmail());
         user.setEmail("test2@i.ua");
@@ -40,37 +37,37 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void delete() throws DaoException {
+    public void testDelete() throws DaoException {
         userDao.delete(1);
         Assert.assertEquals(11, userDao.findAll().size());
     }
 
     @Test
-    public void create() throws DaoException {
+    public void testCreate() throws DaoException {
         testUser.addRole(Role.ROLE_ADMIN);
         userDao.create(testUser);
         Assert.assertEquals(13, userDao.findAll().size());
     }
 
     @Test
-    public void getByEmail() throws DaoException {
+    public void testGetByEmail() throws DaoException {
         userDao.create(testUser);
         Assert.assertEquals(testUser.getId(), userDao.getByEmail(testUser.getEmail()).getId());
     }
 
     @Test
-    public void find() throws DaoException {
+    public void testFind() throws DaoException {
         userDao.create(testUser);
         Assert.assertEquals(testUser.getId(), userDao.find(testUser.getId()).getId());
     }
 
     @Test
-    public void findNull() throws DaoException {
+    public void testFindNull() throws DaoException {
         Assert.assertNull(userDao.find(0));
     }
 
     @Test
-    public void createExistEmail() {
+    public void testCreateExistEmail() {
         try {
             userDao.create(testUser);
             userDao.create(testUser);
