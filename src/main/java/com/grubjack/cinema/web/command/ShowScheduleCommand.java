@@ -37,7 +37,7 @@ public class ShowScheduleCommand implements Command {
         log.info("Executing with session id {}", request.getSession().getId());
         request.getSession().setAttribute(DAYS_ATTR, DayOfWeek.values());
         request.getSession().setAttribute(TIMES_ATTR, TimeOfDay.values());
-        request.setAttribute(SCHEDULE_ATTR, ServiceFactory.getInstance().getShowService().getSchedule());
+        request.getSession().setAttribute(SCHEDULE_ATTR, ServiceFactory.getInstance().getShowService().getSchedule());
         return ConfigManager.getInstance().getProperty(MAIN_PAGE_PATH);
     }
 }

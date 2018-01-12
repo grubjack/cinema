@@ -63,6 +63,7 @@ public class ShowServiceImpl implements ShowService {
      */
     @Override
     public Map<TimeOfDay, Map<DayOfWeek, Show>> getSchedule() throws DaoException {
+        log.info("Get schedule");
         return showDao.findAll().stream().collect(groupingBy(Show::getTimeOfDay, toMap(Show::getDayOfWeek, identity())));
     }
 

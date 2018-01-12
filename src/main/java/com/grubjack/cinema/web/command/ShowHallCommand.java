@@ -43,10 +43,9 @@ public class ShowHallCommand implements Command {
         }
         int showId = (int) request.getSession().getAttribute(SHOW_ID_PARAM);
         log.info("Show tickets for session with id " + showId);
-        request.getSession().setAttribute(TICKETS_ATTR, ServiceFactory.getInstance().getTicketService().findByShow(showId));
+        request.getSession().setAttribute(TICKETS_ATTR, ServiceFactory.getInstance().getTicketService().findByShowGroupByPlace(showId));
         request.getSession().setAttribute(ROWS_ATTR, ConfigManager.getInstance().getProperty(ConfigManager.HALL_ROW_VALUE));
         request.getSession().setAttribute(SEATS_ATTR, ConfigManager.getInstance().getProperty(ConfigManager.HALL_SEAT_VALUE));
-        request.getSession().setAttribute(TICKET_SERVICE_ATTR, ServiceFactory.getInstance().getTicketService());
         request.getSession().setAttribute(ATTENDANCE_ATTR, ServiceFactory.getInstance().getShowService().getAttendance(showId));
         return ConfigManager.getInstance().getProperty(HALL_PAGE_PATH);
     }

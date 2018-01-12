@@ -5,6 +5,7 @@ import com.grubjack.cinema.model.Ticket;
 import com.grubjack.cinema.to.TicketWithShow;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@code TicketService} interface for service working with login of tickets
@@ -24,7 +25,7 @@ public interface TicketService {
      * @return List of tickets corresponding to show with id {@param showId}
      * @throws DaoException exception for dao operations
      */
-    List<Ticket> findByShow(int showId) throws DaoException;
+    Map<Integer, Map<Integer, Ticket>> findByShowGroupByPlace(int showId) throws DaoException;
 
     /**
      * Change status of user ticket to sold
@@ -44,11 +45,4 @@ public interface TicketService {
      */
     void cancel(int id) throws DaoException;
 
-    /**
-     * Find the ticket by row and seat for some show
-     *
-     * @return Ticket corresponding to show with id {@param showId}with row {@param row}  and seat {@param seat}
-     * @throws DaoException exception for dao operations
-     */
-    Ticket findByPlace(String showId, int row, int seat) throws DaoException;
 }

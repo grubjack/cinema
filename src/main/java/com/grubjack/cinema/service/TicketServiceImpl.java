@@ -11,7 +11,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * {@code TicketServiceImpl} implementation of interface {@code TicketService} with login for entity {@code Ticket}
@@ -21,11 +25,6 @@ public class TicketServiceImpl implements TicketService {
      * Class logger
      */
     private static Logger log = LoggerFactory.getLogger(TicketServiceImpl.class);
-
-    /**
-     * Store show tickets for preventing a lot of queries to database
-     */
-    private List<Ticket> showTickets;
 
     /**
      * interface {@code TicketDao} for jdbc operations with entity {@code Ticket}
@@ -61,30 +60,15 @@ public class TicketServiceImpl implements TicketService {
     }
 
     /**
-     * Find all movie show tickets
+     * Find all show tickets group by rows and seats
      *
-     * @return List of tickets corresponding to show with id {@param showId}
+     * @return Map of tickets corresponding to show with id {@param showId} group by place
      * @throws DaoException exception for dao operations
      */
     @Override
-    public List<Ticket> findByShow(int showId) throws DaoException {
-        log.info("Get tickets of show with id {}", showId);
-        return ticketDao.findByShow(showId);
-    }
-
-    /**
-     * Find the ticket by row and seat for some show
-     *
-     * @return Ticket corresponding to show with id {@param showId}with row {@param row}  and seat {@param seat}
-     * @throws DaoException exception for dao operations
-     */
-    @Override
-    public Ticket findByPlace(String showId, int row, int seat) throws DaoException {
-        if (showTickets == null) {
-            log.info("Get ticket of show with id {} and place row: {}, seat: {}", showId, row, seat);
-            showTickets = ticketDao.findByShow(Integer.parseInt(showId));
-        }
-        return showTickets.stream().filter(t -> t.getRow() == row && t.getSeat() == seat).collect(Collectors.toList()).get(0);
+    public Map<Integer, Map<Integer, Ticket>> findByShowGroupByPlace(int showId) throws DaoException {
+        log.info("Get ticket of show with id {} group by place", showId);
+        return ticketDao.findByShow(showId).stream().collect(groupingBy(Ticket::getRow, toMap(Ticket::getSeat, identity())));
     }
 
     /**

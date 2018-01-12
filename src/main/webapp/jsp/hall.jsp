@@ -17,7 +17,7 @@
             <th>${lang['ticket.row']} ${row}</th>
             <c:forEach begin="1" end="${seats}" var="seat">
                 <td>
-                    <c:set value="${ticketService.findByPlace(showId,row,seat)}" var="ticket"/>
+                    <c:set value="${tickets.get(row).get(seat)}" var="ticket"/>
                     <c:if test="${ticket != null}">
                         ${ticket.price} ${lang['ticket.currency']}
                         <c:choose>
