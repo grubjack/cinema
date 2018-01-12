@@ -233,3 +233,11 @@ a:hover.button, a:active.button {
     display: inline-block;
     float: left;
 }
+
+.warning {
+    font-size: 14pt;
+    color: red;
+    margin: 5px 0 0 0;
+    display: inline-block;
+    float: left;
+}

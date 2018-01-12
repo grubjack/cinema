@@ -44,3 +44,17 @@
     </div>
     <br>
 </c:if>
+<c:if test="${wrongPassword !=null}">
+    <br><br>
+    <div class="warning">
+            ${lang['user.not_exist']}
+    </div>
+    <br>
+</c:if>
+<c:if test="${duplicateEmail !=null}">
+    <br><br>
+    <div class="warning">
+            ${lang['app.duplicate_email']}
+    </div>
+    <br>
+</c:if>
