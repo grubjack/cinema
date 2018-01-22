@@ -1,9 +1,7 @@
 package com.grubjack.cinema.web.command;
 
 import com.grubjack.cinema.exception.DaoException;
-import com.grubjack.cinema.model.DayOfWeek;
-import com.grubjack.cinema.model.Show;
-import com.grubjack.cinema.model.TimeOfDay;
+import com.grubjack.cinema.model.*;
 import com.grubjack.cinema.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +41,12 @@ public class CreateMovieCommand implements Command {
             DayOfWeek dayOfWeek = DayOfWeek.valueOf(day);
             TimeOfDay timeOfDay = TimeOfDay.convert(time);
             log.info("Create movie \"{}\" day {}, time {} ", movie, day, time);
-            ServiceFactory.getInstance().getShowService().create(new Show(dayOfWeek, timeOfDay, movie));
+            User loggedUser = (User) request.getSession().getAttribute(LOGGED_USER_ATTR);
+            if (loggedUser != null && loggedUser.hasRole(Role.ROLE_ADMIN)) {
+                ServiceFactory.getInstance().getShowService().create(new Show(dayOfWeek, timeOfDay, movie));
+            } else {
+                log.warn("Access denied: user {} without permissions tried to create movie", loggedUser);
+            }
         }
         return new ShowScheduleCommand().execute(request, response);
     }

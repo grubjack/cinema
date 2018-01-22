@@ -1,6 +1,7 @@
 package com.grubjack.cinema.web.command;
 
 import com.grubjack.cinema.exception.DaoException;
+import com.grubjack.cinema.model.Role;
 import com.grubjack.cinema.model.User;
 import com.grubjack.cinema.service.ServiceFactory;
 import org.slf4j.Logger;
@@ -33,12 +34,16 @@ public class DeleteUserCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());
         String userId = request.getParameter(USER_ID_PARAM);
+        User loggedUser = (User) request.getSession().getAttribute(LOGGED_USER_ATTR);
         if (userId != null && !userId.isEmpty()) {
             log.info("Delete user with id {}", Integer.parseInt(userId));
-            ServiceFactory.getInstance().getUserService().delete(Integer.parseInt(userId));
-            User loggedUser = (User) request.getSession().getAttribute(LOGGED_USER_ATTR);
-            if (loggedUser != null && loggedUser.getId() == Integer.parseInt(userId)) {
-                return new LogoutCommand().execute(request, response);
+            if (loggedUser != null && loggedUser.hasRole(Role.ROLE_ADMIN)) {
+                ServiceFactory.getInstance().getUserService().delete(Integer.parseInt(userId));
+                if (loggedUser.getId() == Integer.parseInt(userId)) {
+                    return new LogoutCommand().execute(request, response);
+                }
+            } else {
+                log.warn("Access denied: user {} without permissions tried to delete user with id {}", loggedUser, userId);
             }
         }
         return new ShowUsersCommand().execute(request, response);

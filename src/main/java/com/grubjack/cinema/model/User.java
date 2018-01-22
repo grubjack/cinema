@@ -126,6 +126,10 @@ public class User implements Serializable {
         return roles.contains(Role.valueOf(role));
     }
 
+    public boolean hasRole(Role role) {
+        return roles.contains(role);
+    }
+
     /**
      * Allows to add new role for user
      *

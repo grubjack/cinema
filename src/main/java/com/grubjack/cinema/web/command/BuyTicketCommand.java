@@ -1,6 +1,7 @@
 package com.grubjack.cinema.web.command;
 
 import com.grubjack.cinema.exception.DaoException;
+import com.grubjack.cinema.model.Role;
 import com.grubjack.cinema.model.User;
 import com.grubjack.cinema.service.ServiceFactory;
 import org.slf4j.Logger;
@@ -34,10 +35,14 @@ public class BuyTicketCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         log.info("Executing with session id {}", request.getSession().getId());
         String ticketId = request.getParameter(TICKET_ID_PARAM);
-        User user = (User) request.getSession().getAttribute(LOGGED_USER_ATTR);
-        if (user != null && ticketId != null && !ticketId.isEmpty()) {
-            log.info("Buy ticket with id {} by user with email {}", ticketId, user.getEmail());
-            ServiceFactory.getInstance().getTicketService().buyTicket(Integer.parseInt(ticketId), user.getId());
+        User loggedUser = (User) request.getSession().getAttribute(LOGGED_USER_ATTR);
+        if (loggedUser != null && ticketId != null && !ticketId.isEmpty()) {
+            log.info("Buy ticket with id {} by user with email {}", ticketId, loggedUser.getEmail());
+            if (loggedUser.hasRole(Role.ROLE_USER)) {
+                ServiceFactory.getInstance().getTicketService().buyTicket(Integer.parseInt(ticketId), loggedUser.getId());
+            } else {
+                log.warn("Access denied: user {} without permissions tried to buy ticket with id", loggedUser, ticketId);
+            }
         }
         return new ShowHallCommand().execute(request, response);
     }
