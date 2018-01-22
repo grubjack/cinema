@@ -4,33 +4,14 @@ DELETE FROM user_roles;
 DELETE FROM users;
 
 INSERT INTO users (firstname, lastname, email, password) VALUES
-  ('Corey', 'Dunn', 'matloff@optonline.net', 'Dd1234'),
-  ('Ted', 'Cobb', 'smcnabb@yahoo.com', 'Tt12345'),
-  ('Kerry', 'Gross', 'webinc@aol.com', 'Gg12345'),
-  ('Dixie', 'Vasquez', 'mwilson@optonline.net', 'Vv12345'),
-  ('Verna', 'Lawrence', 'jbuchana@gmail.com', 'Ll12345'),
-  ('Joel', 'Chavez', 'techie@gmail.com', 'Cc12345'),
-  ('Zachary', 'Vaughn', 'lridener@gmail.com', 'Vv12345'),
-  ('Christy ', 'Gomez', 'philen@optonline.net', 'Gg12345'),
-  ('Karla', 'Bowman', 'jginspace@gmail.com', 'Bb12345'),
-  ('Tommy', 'Owen', 'janneh@gmail.com', 'Oo12345'),
-  ('Alex', 'Urban', 'urban@gmail.com', 'rootINA'),
-  ('Test', 'Testovich', 'test@gmail.com', 'test123');
+  ('Alex', 'Urban', 'urban@gmail.com', 'Uu1234'),
+  ('Jack', 'Daniels', 'jack@daniels.com', 'Jj1234'),
+  ('Guest', 'User', 'guest@i.ua', 'Gg1234');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 1),
-  ('ROLE_ADMIN', 2),
-  ('ROLE_USER', 3),
-  ('ROLE_USER', 4),
-  ('ROLE_USER', 5),
-  ('ROLE_USER', 6),
-  ('ROLE_USER', 7),
-  ('ROLE_USER', 8),
-  ('ROLE_USER', 9),
-  ('ROLE_USER', 10),
-  ('ROLE_ADMIN', 11),
-  ('ROLE_USER', 11);
-
+  ('ROLE_ADMIN', 1),
+  ('ROLE_USER', 2);
 
 INSERT INTO shows (day, time, movie) VALUES
   ('MONDAY', '09:00', 'Her'),

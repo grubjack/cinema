@@ -4,32 +4,14 @@ DELETE FROM `user_roles`;
 DELETE FROM `users`;
 
 INSERT INTO `users` (firstname, lastname, email, password) VALUES
-  ('Corey', 'Dunn', 'matloff@optonline.net', md5('Dd1234')),
-  ('Ted', 'Cobb', 'smcnabb@yahoo.com', md5('Tt12345')),
-  ('Kerry', 'Gross', 'webinc@aol.com', md5('Gg12345')),
-  ('Dixie', 'Vasquez', 'mwilson@optonline.net', md5('Vv12345')),
-  ('Verna', 'Lawrence', 'jbuchana@gmail.com', md5('Ll12345')),
-  ('Joel', 'Chavez', 'techie@gmail.com', md5('Cc12345')),
-  ('Zachary', 'Vaughn', 'lridener@gmail.com', md5('Vv12345')),
-  ('Christy ', 'Gomez', 'philen@optonline.net', md5('Gg12345')),
-  ('Karla', 'Bowman', 'jginspace@gmail.com', md5('Bb12345')),
-  ('Tommy', 'Owen', 'janneh@gmail.com', md5('Oo12345')),
-  ('Alex', 'Urban', 'urban@gmail.com', md5('rootINA')),
-  ('Test', 'Testovich', 'test@gmail.com', md5('test123'));
+  ('Alex', 'Urban', 'urban@gmail.com', md5('Uu1234')),
+  ('Jack', 'Daniels', 'jack@daniels.com', md5('Jj1234')),
+  ('Guest', 'User', 'guest@i.ua', md5('Gg1234'));
 
 INSERT INTO `user_roles` (role, user_id) VALUES
   ('ROLE_USER', 1),
-  ('ROLE_ADMIN', 2),
-  ('ROLE_USER', 3),
-  ('ROLE_USER', 4),
-  ('ROLE_USER', 5),
-  ('ROLE_USER', 6),
-  ('ROLE_USER', 7),
-  ('ROLE_USER', 8),
-  ('ROLE_USER', 9),
-  ('ROLE_USER', 10),
-  ('ROLE_ADMIN', 11),
-  ('ROLE_USER', 11);
+  ('ROLE_ADMIN', 1),
+  ('ROLE_USER', 2);
 
 
 INSERT INTO `shows` (day, time, movie) VALUES
