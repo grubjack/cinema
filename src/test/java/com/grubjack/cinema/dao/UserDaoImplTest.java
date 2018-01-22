@@ -24,7 +24,7 @@ public class UserDaoImplTest {
 
     @Test
     public void testFindAll() throws DaoException {
-        Assert.assertEquals(12, userDao.findAll().size());
+        Assert.assertEquals(3, userDao.findAll().size());
     }
 
     @Test
@@ -39,14 +39,14 @@ public class UserDaoImplTest {
     @Test
     public void testDelete() throws DaoException {
         userDao.delete(1);
-        Assert.assertEquals(11, userDao.findAll().size());
+        Assert.assertEquals(2, userDao.findAll().size());
     }
 
     @Test
     public void testCreate() throws DaoException {
         testUser.addRole(Role.ROLE_ADMIN);
         userDao.create(testUser);
-        Assert.assertEquals(13, userDao.findAll().size());
+        Assert.assertEquals(4, userDao.findAll().size());
     }
 
     @Test
